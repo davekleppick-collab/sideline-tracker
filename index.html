@@ -64,7 +64,7 @@
         .hud-cell span { display: block; font-size: 17px; font-weight: 900; color: #fff; margin-top: 1px; }
         .hud-cell span.highlight { color: var(--accent-gold); }
 
-        /* 2. LIVE TEAM EFFICIENCY TICKER */
+        /* 2. LIVE TEAM TOTALS & EFFICIENCY TICKER */
         .live-stats-box {
             background: #111827;
             border: 1.5px solid var(--border);
@@ -312,7 +312,7 @@
         }
         .undo-btn:active { background: #334155; }
 
-        /* 9. SLIDE-UP ANALYTICS & GAME LOG HUB */
+        /* 9. SLIDE-UP ANALYTICS & LOG MODAL */
         .log-modal {
             position: absolute;
             top: 0;
@@ -344,7 +344,6 @@
             font-size: 13px;
         }
         
-        /* Modal Tabs */
         .hub-tabs {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -375,7 +374,6 @@
             padding: 8px;
         }
 
-        /* Overview Breakdown Cards */
         .analytics-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -443,9 +441,9 @@
             <div>DOWN & DIST</div>
             <span id="hudDownDist" class="highlight">1st & 10</span>
         </div>
-        <div class="hud-cell">
-            <div>BALL ON</div>
-            <span id="hudBallOn">Own 35</span>
+        <div class="hud-cell" onclick="promptEditBallOn()" style="cursor: pointer;">
+            <div>BALL ON ✏️</div>
+            <span id="hudBallOn" style="text-decoration: underline dotted var(--accent-gold);">Own 35</span>
         </div>
         <div class="hud-cell">
             <div>TO GOAL</div>
@@ -477,7 +475,7 @@
         </div>
     </div>
 
-    <!-- 3. SCOREBOARD COUNTDOWN DRIVE BAR -->
+    <!-- 3. SCOREBOARD COUNTDOWN DRIVE STRIP -->
     <div class="drive-strip">
         <button type="button" class="qtr-btn" id="qtrSelectorBtn" onclick="toggleQuarter()">Q1</button>
         <span class="drive-time-txt">
@@ -563,7 +561,6 @@
             <button type="button" class="close-modal-btn" onclick="closeLogModal()">✖ Close</button>
         </div>
         
-        <!-- Tab Navigation -->
         <div class="hub-tabs">
             <button type="button" class="hub-tab-btn active" id="tabBtnTeam" onclick="switchHubTab('team')">Team Totals</button>
             <button type="button" class="hub-tab-btn" id="tabBtnPlayers" onclick="switchHubTab('players')">Player Stats</button>
@@ -772,6 +769,35 @@
         document.getElementById('qtrSelectorBtn').innerText = quarters[currentQuarterIdx];
     }
 
+    function parseYardlineInput(input, defaultVal) {
+        if (!input) return defaultVal;
+        let clean = input.trim().toLowerCase();
+        let numMatch = clean.match(/\d+/);
+        if (!numMatch) return defaultVal;
+        let val = parseInt(numMatch[0]);
+        if (isNaN(val)) return defaultVal;
+        val = Math.max(1, Math.min(99, val));
+        
+        if (clean.includes("opp") || clean.startsWith("+")) {
+            return 100 - val;
+        }
+        return val;
+    }
+
+    function promptEditBallOn() {
+        let curStr = gameState.ballOn === 50 ? "50" : (gameState.ballOn < 50 ? `Own ${gameState.ballOn}` : `Opp ${100 - gameState.ballOn}`);
+        let p = prompt("Edit Ball On Yardline (e.g., Own 25, 40, Opp 30):", curStr);
+        if (p !== null) {
+            saveHistory();
+            gameState.ballOn = parseYardlineInput(p, gameState.ballOn);
+            let toGoal = 100 - gameState.ballOn;
+            if (gameState.distance > toGoal) {
+                gameState.distance = toGoal;
+            }
+            updateHUD();
+        }
+    }
+
     function parseClockToSeconds(str) {
         if (!str || str.includes("--:--")) return null;
         let parts = str.trim().split(" ");
@@ -821,7 +847,6 @@
         let unsuccRate = totalPlays > 0 ? Math.round((unsuccCount / totalPlays) * 100) : 0;
         let negRate = totalPlays > 0 ? Math.round((negCount / totalPlays) * 100) : 0;
 
-        // Sideline Pinned Ticker
         document.getElementById('statPlays').innerText = totalPlays;
         document.getElementById('statTotYds').innerText = totYds;
         document.getElementById('statRushPlays').innerText = rushPlays;
@@ -832,7 +857,6 @@
         document.getElementById('statSuccRate').innerText = `${succRate}%`;
         document.getElementById('statTOP').innerText = calculateTotalTOP();
 
-        // Hub Overview Cards
         document.getElementById('overviewPlays').innerText = totalPlays;
         document.getElementById('overviewNetYards').innerText = totYds;
         document.getElementById('overviewTOP').innerText = calculateTotalTOP();
@@ -1041,14 +1065,20 @@
     }
 
     function promptNewDrive() {
-        const startYd = prompt("Starting Field Position (Own yardline):", "35");
-        if (!startYd) return;
+        let yardPrompt = prompt("Starting Yardline for New Drive (e.g., Own 25, 40, Opp 30):", "Own 35");
+        if (yardPrompt === null) return;
+        
+        let newBallOn = parseYardlineInput(yardPrompt, 35);
+        let qtr = quarters[currentQuarterIdx];
+        let clockPrompt = prompt(`Drive Start Scoreboard Clock (${qtr}):`, `${qtr} 10:00`);
+
         saveHistory();
         gameState.driveNum += 1;
         gameState.down = 1;
-        gameState.distance = 10;
-        gameState.ballOn = parseInt(startYd) || 35;
-        gameState.startTime = `${quarters[currentQuarterIdx]} 10:00`;
+        gameState.ballOn = newBallOn;
+        let toGoal = 100 - gameState.ballOn;
+        gameState.distance = Math.min(10, toGoal);
+        gameState.startTime = clockPrompt || `${qtr} 10:00`;
         gameState.endTime = "--:--";
         
         if (!gameState.driveHistory[gameState.driveNum]) {
@@ -1111,7 +1141,9 @@
         }
 
         let gain = parseInt(inputYardsBuffer) || 0;
-        let initialSit = `${["1st", "2nd", "3rd", "4th"][gameState.down - 1]} & ${gameState.distance}`;
+        let toGoalBefore = 100 - gameState.ballOn;
+        let dnStr = ["1st", "2nd", "3rd", "4th"][gameState.down - 1];
+        let initialSit = gameState.distance >= toGoalBefore ? `${dnStr} & Goal` : `${dnStr} & ${gameState.distance}`;
         let initialBallOn = gameState.ballOn;
         let playerTgt = selectedPlayer || (activeCall.type === 'Boeing' ? "Butler to Pass" : "Ball Carrier");
 
@@ -1126,7 +1158,9 @@
         } else if (activeSpecial.startsWith("Penalty")) {
             gameState.ballOn = Math.max(1, Math.min(99, gameState.ballOn + gain));
             gameState.distance = Math.max(1, gameState.distance - gain);
-            nextSit = `${["1st", "2nd", "3rd", "4th"][gameState.down - 1]} & ${gameState.distance}`;
+            let toGoalNow = 100 - gameState.ballOn;
+            let curDn = ["1st", "2nd", "3rd", "4th"][gameState.down - 1];
+            nextSit = gameState.distance >= toGoalNow ? `${curDn} & Goal` : `${curDn} & ${gameState.distance}`;
         } else {
             gameState.ballOn = Math.min(99, gameState.ballOn + gain);
             let toGoal = 100 - gameState.ballOn;
@@ -1138,7 +1172,8 @@
                 if (gameState.down < 4) {
                     gameState.down += 1;
                     gameState.distance -= gain;
-                    nextSit = `${["1st", "2nd", "3rd", "4th"][gameState.down - 1]} & ${gameState.distance}`;
+                    let nextDn = ["1st", "2nd", "3rd", "4th"][gameState.down - 1];
+                    nextSit = gameState.distance >= toGoal ? `${nextDn} & Goal` : `${nextDn} & ${gameState.distance}`;
                 } else {
                     nextSit = "Turnover on Downs";
                 }
