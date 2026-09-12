@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>10U Gold Sideline Tracker</title>
+    <style>
+        :root {
+            --bg-main: #060911;
+            --surface: #0f172a;
+            --surface-elevated: #1e293b;
+            --border: #334155;
+            --accent-gold: #facc15;
+            --cadillac: #22c55e;
+            --boeing: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        html, body {
+            height: 100dvh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+        }
+
+        .app-shell {
+            display: flex;
+            flex-direction: column;
+            height: 100dvh;
+            padding: calc(env(safe-area-inset-top) + 6px) 12px calc(env(safe-area-inset-bottom) + 8px) 12px;
+            gap: 8px;
+        }
+
+        /* 1. TOP HUD */
+        .hud-grid {
+            display: grid;
+            grid-template-columns: 0.8fr 1.4fr 1.1fr 0.9fr;
+            gap: 6px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 8px 10px;
+            border-radius: 14px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .hud-cell div { font-size: 11px; color: var(--text-muted); font-weight: 800; letter-spacing: 0.5px; }
+        .hud-cell span { display: block; font-size: 18px; font-weight: 900; color: #fff; margin-top: 1px; }
+        .hud-cell span.highlight { color: var(--accent-gold); }
+
+        /* 2. DRIVE BAR & TIME BUTTONS */
+        .drive-strip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 6px 12px;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+        .drive-time-txt { font-weight: 700; color: var(--text-muted); }
+        .drive-btn-group { display: flex; gap: 6px; }
+        .drive-action-btn {
+            background: var(--surface-elevated);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+        .drive-action-btn:active { background: var(--accent-gold); color: #000; }
+
+        /* 3. HERO CALL BANNER */
+        .call-banner {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            min-height: 64px;
+            flex-shrink: 0;
+        }
+        .call-banner.cadillac-active { border-color: var(--cadillac); }
+        .call-banner.boeing-active { border-color: var(--boeing); }
+        .call-num-badge {
+            font-size: 32px;
+            font-weight: 900;
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            min-width: 64px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+        }
+        .call-meta {
+            flex: 1;
+            margin-left: 14px;
+        }
+        .call-meta .play-title { font-size: 17px; font-weight: 900; line-height: 1.1; }
+        .call-meta .play-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; font-weight: 600; }
+
+        /* 4. KEYPAD SECTION */
+        .keypad-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 8px;
+            gap: 8px;
+            min-height: 0;
+        }
+        .mode-toggle-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .mode-btn {
+            height: 44px;
+            font-size: 14px;
+            font-weight: 800;
+            background: var(--surface-elevated);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+        .mode-btn.active {
+            background: var(--accent-gold);
+            color: #000;
+            border-color: var(--accent-gold);
+            font-weight: 900;
+        }
+
+        .numpad-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .num-key {
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            font-size: 26px;
+            font-weight: 900;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .num-key:active { background: #334155; }
+        .num-key.action-key {
+            font-size: 16px;
+            font-weight: 800;
+            background: #233148;
+            color: #cbd5e1;
+        }
+
+        /* 5. PLAYER SELECTION GRID */
+        .selector-box {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .selector-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            padding: 0 4px;
+        }
+        .pill-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+        .pill-btn {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 800;
+            border-radius: 10px;
+            text-align: center;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.1;
+        }
+        .pill-btn:active { background: #334155; }
+        .pill-btn.active {
+            background: var(--accent-gold);
+            color: #000;
+            border-color: var(--accent-gold);
+            font-weight: 900;
+        }
+
+        /* 6. BOTTOM COMMAND BUTTONS */
+        .bottom-actions {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .big-log-btn {
+            background: var(--cadillac);
+            color: #042f13;
+            border: none;
+            border-radius: 14px;
+            height: 60px;
+            font-size: 20px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 0.5px;
+        }
+        .big-log-btn:active { background: #16a34a; }
+        .undo-btn {
+            background: var(--surface-elevated);
+            color: #cbd5e1;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 800;
+            height: 60px;
+        }
+        .undo-btn:active { background: #334155; }
+    </style>
+</head>
+<body>
+
+<div class="app-shell">
+
+    <!-- 1. HUD -->
+    <div class="hud-grid">
+        <div class="hud-cell">
+            <div>DRIVE</div>
+            <span>#<span id="hudDrive">1</span></span>
+        </div>
+        <div class="hud-cell">
+            <div>DOWN & DIST</div>
+            <span id="hudDownDist" class="highlight">1st & 10</span>
+        </div>
+        <div class="hud-cell">
+            <div>BALL ON</div>
+            <span id="hudBallOn">Own 35</span>
+        </div>
+        <div class="hud-cell">
+            <div>TO GOAL</div>
+            <span id="hudToGoal">65</span>
+        </div>
+    </div>
+
+    <!-- 2. DRIVE BAR -->
+    <div class="drive-strip">
+        <span class="drive-time-txt">⏱️ <b id="displayDriveTimes">Start: --:-- | End: --:--</b></span>
+        <div class="drive-btn-group">
+            <button type="button" class="drive-action-btn" onclick="quickMarkClock('start')">In</button>
+            <button type="button" class="drive-action-btn" onclick="quickMarkClock('end')">Out</button>
+            <button type="button" class="drive-action-btn" style="background:#2d240d; border-color:var(--accent-gold); color:var(--accent-gold);" onclick="promptNewDrive()">+ New</button>
+        </div>
+    </div>
+
+    <!-- 3. HERO CALL BANNER -->
+    <div class="call-banner" id="callBannerDisplay">
+        <div class="call-num-badge" id="bannerCallNum">--</div>
+        <div class="call-meta">
+            <div class="play-title" id="bannerPlayName">Punch Call # Below</div>
+            <div class="play-sub" id="bannerPlaySub">Use keypad on screen</div>
+        </div>
+    </div>
+
+    <!-- 4. KEYPAD SECTION -->
+    <div class="keypad-section">
+        <div class="mode-toggle-row">
+            <button type="button" class="mode-btn active" id="tabModeCall" onclick="setNumpadMode('call')">Call #</button>
+            <button type="button" class="mode-btn" id="tabModeYards" onclick="setNumpadMode('yards')">Yards</button>
+            <button type="button" class="mode-btn" id="tabModeSpecial" onclick="setNumpadMode('special')">Event/TD</button>
+        </div>
+
+        <!-- NUMPAD -->
+        <div class="numpad-grid" id="numpadGrid">
+            <button type="button" class="num-key" onclick="numpadPress('1')">1</button>
+            <button type="button" class="num-key" onclick="numpadPress('2')">2</button>
+            <button type="button" class="num-key" onclick="numpadPress('3')">3</button>
+            <button type="button" class="num-key" onclick="numpadPress('4')">4</button>
+            <button type="button" class="num-key" onclick="numpadPress('5')">5</button>
+            <button type="button" class="num-key" onclick="numpadPress('6')">6</button>
+            <button type="button" class="num-key" onclick="numpadPress('7')">7</button>
+            <button type="button" class="num-key" onclick="numpadPress('8')">8</button>
+            <button type="button" class="num-key" onclick="numpadPress('9')">9</button>
+            <button type="button" class="num-key action-key" id="specialToggleKey" onclick="numpadToggleSign()">+/-</button>
+            <button type="button" class="num-key" onclick="numpadPress('0')">0</button>
+            <button type="button" class="num-key action-key" onclick="numpadClear()">CLR</button>
+        </div>
+
+        <!-- SPECIAL EVENT MODIFIER PANEL -->
+        <div class="pill-grid" id="specialGrid" style="display: none; height: 100%;">
+            <button type="button" class="pill-btn active" onclick="selectSpecial('Normal', this)">Clean</button>
+            <button type="button" class="pill-btn" onclick="selectSpecial('Touchdown', this)">🎉 TD</button>
+            <button type="button" class="pill-btn" onclick="selectSpecial('Turnover', this)">⚠️ TO</button>
+            <button type="button" class="pill-btn" onclick="selectSpecial('Penalty Offense', this)">Off Pen</button>
+            <button type="button" class="pill-btn" onclick="selectSpecial('Penalty Defense', this)">Def Pen</button>
+            <button type="button" class="pill-btn" onclick="selectSpecial('Incomplete', this)">Inc Pass</button>
+        </div>
+    </div>
+
+    <!-- 5. TARGET SELECTION -->
+    <div class="selector-box">
+        <div class="selector-header">
+            <span id="playerGridLabel">Ball Carrier (Run)</span>
+            <span id="currentYardsLabel" style="color: var(--accent-gold); font-size: 14px;">Gain: 0 Yds</span>
+        </div>
+        <div class="pill-grid" id="playerPillGrid"></div>
+    </div>
+
+    <!-- 6. BOTTOM COMMAND BUTTONS -->
+    <div class="bottom-actions">
+        <button type="button" class="big-log-btn" onclick="logPlay()">LOG PLAY</button>
+        <button type="button" class="undo-btn" onclick="undoLastPlay()">UNDO</button>
+    </div>
+
+</div>
+
+<script>
+    // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+    const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+    const playbook = {
+        1: { name: "19 Sweep", type: "Cadillac", form: "Wing Left" },
+        2: { name: "11 Power Sweep", type: "Cadillac", form: "Wing Left" },
+        3: { name: "21 Sweep", type: "Cadillac", form: "Wing Left" },
+        4: { name: "22 Power", type: "Cadillac", form: "Wing Left" },
+        5: { name: "36 Dive", type: "Cadillac", form: "Wing Left" },
+        6: { name: "Fake 36 Dive 22 Counter", type: "Cadillac", form: "Wing Left" },
+        7: { name: "Z Motion Over 39 Sweep", type: "Cadillac", form: "Wing Left" },
+        8: { name: "Z Motion Over 41 Convoy", type: "Cadillac", form: "Wing Left" },
+        9: { name: "Z Motion Over 38 Power", type: "Cadillac", form: "Wing Left" },
+        10: { name: "Z Motion Back 19 Sweep (X crack)", type: "Cadillac", form: "Wing Left" },
+        11: { name: "Z Motion Back 21 Counter", type: "Cadillac", form: "Wing Left" },
+        12: { name: "Z Motion Over Boot Right", type: "Boeing", form: "Wing Left" },
+        13: { name: "Tailback Motion Out, Tailback Wheel", type: "Boeing", form: "Wing Left" },
+        14: { name: "Fake 22 Power H Flag", type: "Boeing", form: "Wing Left" },
+        15: { name: "Fake 36 Dive TB Seam", type: "Boeing", form: "Wing Left" },
+        16: { name: "Z Motion Over, Fake 26, X/Z Switch", type: "Boeing", form: "Wing Left" },
+        17: { name: "Tailback Motion Out - Z Under", type: "Boeing", form: "Wing Left" },
+        18: { name: "Fake 36 Dive H Drag", type: "Boeing", form: "Wing Left" },
+        19: { name: "Z Motion Over, Fake 38 - Z Angle", type: "Boeing", form: "Wing Left" },
+        20: { name: "Z Motion Over TB Swing Right", type: "Boeing", form: "Wing Left" },
+        21: { name: "SPREAD - H Drag", type: "Boeing", form: "Wing Left" },
+        22: { name: "21 Sweep QB Throwback", type: "Boeing", form: "Wing Left" },
+        23: { name: "11 Sweep", type: "Cadillac", form: "Wing Right" },
+        24: { name: "19 Power Sweep", type: "Cadillac", form: "Wing Right" },
+        25: { name: "29 Sweep", type: "Cadillac", form: "Wing Right" },
+        26: { name: "28 Power", type: "Cadillac", form: "Wing Right" },
+        27: { name: "34 Dive", type: "Cadillac", form: "Wing Right" },
+        28: { name: "Fake 34 Dive 28 Counter", type: "Cadillac", form: "Wing Right" },
+        29: { name: "Z Motion Over 31 Sweep", type: "Cadillac", form: "Wing Right" },
+        30: { name: "Z Motion Over 49 Convoy", type: "Cadillac", form: "Wing Right" },
+        31: { name: "Z Motion Over 32 Power", type: "Cadillac", form: "Wing Right" },
+        32: { name: "Z Motion Back 11 Sweep (X crack)", type: "Cadillac", form: "Wing Right" },
+        33: { name: "Z Motion Back 29 Counter", type: "Cadillac", form: "Wing Right" },
+        34: { name: "Z Motion Over Boot Left", type: "Boeing", form: "Wing Right" },
+        35: { name: "Tailback Motion Out, Tailback Wheel", type: "Boeing", form: "Wing Right" },
+        36: { name: "Fake 29 Power H Flag", type: "Boeing", form: "Wing Right" },
+        37: { name: "Fake 34 Dive TB Seam", type: "Boeing", form: "Wing Right" },
+        38: { name: "Z Motion Over, Fake 24, X/Z Switch", type: "Boeing", form: "Wing Right" },
+        39: { name: "Tailback Motion Out Z Under", type: "Boeing", form: "Wing Right" },
+        40: { name: "Fake 34 Dive H Drag", type: "Boeing", form: "Wing Right" },
+        41: { name: "Z Motion Over, Fake 38 - Z Angle", type: "Boeing", form: "Wing Right" },
+        42: { name: "Z Motion Over TB Swing Left", type: "Boeing", form: "Wing Right" },
+        43: { name: "SPREAD - H Drag", type: "Boeing", form: "Wing Right" },
+        44: { name: "29 Sweep QB Throwback", type: "Boeing", form: "Wing Right" },
+        45: { name: "27 Dive", type: "Cadillac", form: "T Formation" },
+        46: { name: "23 Dive", type: "Cadillac", form: "T Formation" },
+        47: { name: "28 Power", type: "Cadillac", form: "T Formation" },
+        48: { name: "22 Power", type: "Cadillac", form: "T Formation" },
+        49: { name: "38 Power", type: "Cadillac", form: "T Formation" },
+        50: { name: "39 Toss", type: "Cadillac", form: "T Formation" },
+        51: { name: "42 Power", type: "Cadillac", form: "T Formation" },
+        52: { name: "41 Toss", type: "Cadillac", form: "T Formation" },
+        53: { name: "Z Motion Over 22 Power", type: "Cadillac", form: "T Formation" },
+        54: { name: "Y Motion Over 42 Power", type: "Cadillac", form: "T Formation" },
+        55: { name: "15 QB Sneak", type: "Cadillac", form: "T Formation" },
+        56: { name: "Fake 27 Dive 42 Counter", type: "Cadillac", form: "T Formation" },
+        57: { name: "Fake 23 Dive 38 Counter", type: "Cadillac", form: "T Formation" },
+        58: { name: "Fake 28 Power 41 Sweep", type: "Cadillac", form: "T Formation" },
+        59: { name: "Fake 22 Power 39 Sweep", type: "Cadillac", form: "T Formation" },
+        60: { name: "Fake Y Power 23 Dive", type: "Cadillac", form: "T Formation" },
+        61: { name: "Fake Y Toss 42 Counter", type: "Cadillac", form: "T Formation" },
+        62: { name: "Fake Z Power 27 Dive", type: "Cadillac", form: "T Formation" },
+        63: { name: "Fake Z Toss 38 Counter", type: "Cadillac", form: "T Formation" },
+        64: { name: "Y Motion Over 28 Power", type: "Cadillac", form: "T Formation" },
+        65: { name: "Z Motion Over 38 Power", type: "Cadillac", form: "T Formation" },
+        66: { name: "30/40 Choice", type: "Cadillac", form: "T Formation" },
+        67: { name: "22 Stretch", type: "Cadillac", form: "Wing Left" },
+        68: { name: "32 Stretch", type: "Cadillac", form: "Wing Left" },
+        69: { name: "SHIFT 29 Toss", type: "Cadillac", form: "Wing Left" },
+        70: { name: "SHIFT 19 Sweep", type: "Cadillac", form: "Wing Left" },
+        71: { name: "SHIFT 41 Convoy", type: "Cadillac", form: "Wing Left" },
+        72: { name: "Fake 21 Sweep, 19 Boot", type: "Cadillac", form: "Wing Left" },
+        73: { name: "SPREAD - Y Draw", type: "Cadillac", form: "Wing Left" },
+        74: { name: "SHIFT Fake 19 Sweep - X Fade", type: "Boeing", form: "Wing Left" },
+        75: { name: "SPREAD - Z motion over X Screen", type: "Boeing", form: "Wing Left" },
+        76: { name: "SPREAD - Z motion over Flood Right", type: "Boeing", form: "Wing Left" },
+        77: { name: "28 Stretch", type: "Cadillac", form: "Wing Right" },
+        78: { name: "38 Stretch", type: "Cadillac", form: "Wing Right" },
+        79: { name: "SHIFT 21 Toss", type: "Cadillac", form: "Wing Right" },
+        80: { name: "SHIFT 11 Sweep", type: "Cadillac", form: "Wing Right" },
+        81: { name: "SHIFT 49 Convoy", type: "Cadillac", form: "Wing Right" },
+        82: { name: "Fake 29 Sweep, 11 Boot", type: "Cadillac", form: "Wing Right" },
+        83: { name: "SPREAD - QB Draw", type: "Cadillac", form: "Wing Right" },
+        84: { name: "SHIFT Fake 11 Sweep - X Fade", type: "Boeing", form: "Wing Right" },
+        85: { name: "SPREAD - Z motion over X Screen", type: "Boeing", form: "Wing Right" },
+        86: { name: "SPREAD - Z motion over Flood Left", type: "Boeing", form: "Wing Right" }
+    };
+
+    const runPlayers = ["Truesdell", "Kleppick", "Butler", "Martinkovich", "Moose", "Dickson", "Wingertsahn", "Other"];
+    const passTargets = ["Butler to Truesdell", "Butler to Kleppick", "Butler to Martinkovich", "Butler to Moose", "Butler to Dickson", "Butler to Wingertsahn", "Incomplete Pass", "Butler Scramble", "Other"];
+
+    let numpadMode = 'call';
+    let inputCallBuffer = "";
+    let inputYardsBuffer = "0";
+    let activeSpecial = "Normal";
+    let selectedPlayer = "";
+    let activeCall = null;
+
+    let gameState = {
+        driveNum: 1,
+        down: 1,
+        distance: 10,
+        ballOn: 35,
+        startTime: "--:--",
+        endTime: "--:--",
+        history: []
+    };
+
+    function setNumpadMode(mode) {
+        numpadMode = mode;
+        document.querySelectorAll('.mode-toggle-row .mode-btn').forEach(b => b.classList.remove('active'));
+        if (mode === 'call') document.getElementById('tabModeCall').classList.add('active');
+        if (mode === 'yards') document.getElementById('tabModeYards').classList.add('active');
+        if (mode === 'special') document.getElementById('tabModeSpecial').classList.add('active');
+
+        const numpad = document.getElementById('numpadGrid');
+        const special = document.getElementById('specialGrid');
+        if (mode === 'special') {
+            numpad.style.display = 'none';
+            special.style.display = 'grid';
+        } else {
+            numpad.style.display = 'grid';
+            special.style.display = 'none';
+        }
+    }
+
+    function numpadPress(char) {
+        if (numpadMode === 'call') {
+            inputCallBuffer = (inputCallBuffer + char).slice(0, 2);
+            resolveCallNumber(parseInt(inputCallBuffer));
+        } else if (numpadMode === 'yards') {
+            if (inputYardsBuffer === "0" || inputYardsBuffer === "") inputYardsBuffer = char;
+            else inputYardsBuffer += char;
+            updateYardsDisplay();
+        }
+    }
+
+    function numpadClear() {
+        if (numpadMode === 'call') {
+            inputCallBuffer = "";
+            resolveCallNumber(null);
+        } else if (numpadMode === 'yards') {
+            inputYardsBuffer = "0";
+            updateYardsDisplay();
+        }
+    }
+
+    function numpadToggleSign() {
+        if (numpadMode === 'yards') {
+            if (inputYardsBuffer.startsWith("-")) inputYardsBuffer = inputYardsBuffer.replace("-", "");
+            else if (inputYardsBuffer !== "0") inputYardsBuffer = "-" + inputYardsBuffer;
+            updateYardsDisplay();
+        }
+    }
+
+    function updateYardsDisplay() {
+        document.getElementById('currentYardsLabel').innerText = `Gain: ${inputYardsBuffer || "0"} Yds`;
+    }
+
+    function resolveCallNumber(num) {
+        const bannerNum = document.getElementById('bannerCallNum');
+        const bannerName = document.getElementById('bannerPlayName');
+        const bannerSub = document.getElementById('bannerPlaySub');
+        const banner = document.getElementById('callBannerDisplay');
+
+        if (num && playbook[num]) {
+            activeCall = { num: num, ...playbook[num] };
+            bannerNum.innerText = num;
+            bannerName.innerText = activeCall.name;
+            bannerSub.innerText = `${activeCall.form} | ${activeCall.type === 'Cadillac' ? 'Cadillac (Run)' : 'Boeing (Pass)'}`;
+            
+            banner.classList.remove('cadillac-active', 'boeing-active');
+            banner.classList.add(activeCall.type === 'Cadillac' ? 'cadillac-active' : 'boeing-active');
+            
+            renderPlayerPills(activeCall.type === 'Boeing');
+            setNumpadMode('yards');
+        } else {
+            activeCall = null;
+            bannerNum.innerText = num ? num : "--";
+            bannerName.innerText = num ? "Call Not Found" : "Punch Call # Below";
+            bannerSub.innerText = "Select or enter valid call # (1-86)";
+            banner.classList.remove('cadillac-active', 'boeing-active');
+            renderPlayerPills(false);
+        }
+    }
+
+    function renderPlayerPills(isPass) {
+        const container = document.getElementById('playerPillGrid');
+        const label = document.getElementById('playerGridLabel');
+        container.innerHTML = "";
+        selectedPlayer = "";
+
+        const list = isPass ? passTargets : runPlayers;
+        label.innerText = isPass ? "Pass Target (Butler To...)" : "Ball Carrier (Run)";
+
+        list.forEach(item => {
+            const btn = document.createElement('button');
+            btn.type = "button";
+            btn.className = "pill-btn";
+            btn.innerText = item;
+            btn.onclick = () => {
+                document.querySelectorAll('#playerPillGrid .pill-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedPlayer = item;
+            };
+            container.appendChild(btn);
+        });
+    }
+
+    function selectSpecial(val, btn) {
+        activeSpecial = val;
+        document.querySelectorAll('#specialGrid .pill-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    function quickMarkClock(type) {
+        const now = new Date();
+        let hr = now.getHours() % 12 || 12;
+        let mn = now.getMinutes().toString().padStart(2, '0');
+        const tStr = `${hr}:${mn}`;
+        if (type === 'start') gameState.startTime = tStr;
+        else gameState.endTime = tStr;
+        document.getElementById('displayDriveTimes').innerText = `Start: ${gameState.startTime} | End: ${gameState.endTime}`;
+    }
+
+    function promptNewDrive() {
+        const startYd = prompt("Starting Field Position (Own yardline):", "35");
+        if (!startYd) return;
+        saveHistory();
+        gameState.driveNum += 1;
+        gameState.down = 1;
+        gameState.distance = 10;
+        gameState.ballOn = parseInt(startYd) || 35;
+        quickMarkClock('start');
+        gameState.endTime = "--:--";
+        document.getElementById('displayDriveTimes').innerText = `Start: ${gameState.startTime} | End: ${gameState.endTime}`;
+        updateHUD();
+    }
+
+    function updateHUD() {
+        document.getElementById('hudDrive').innerText = gameState.driveNum;
+        let posStr = gameState.ballOn === 50 ? "50 Yd" : (gameState.ballOn < 50 ? `Own ${gameState.ballOn}` : `Opp ${100 - gameState.ballOn}`);
+        document.getElementById('hudBallOn').innerText = posStr;
+
+        let toGoal = 100 - gameState.ballOn;
+        document.getElementById('hudToGoal').innerText = toGoal;
+        let dnStr = ["1st", "2nd", "3rd", "4th"][gameState.down - 1];
+
+        document.getElementById('hudDownDist').innerText = gameState.distance >= toGoal ? `${dnStr} & Goal` : `${dnStr} & ${gameState.distance}`;
+    }
+
+    function saveHistory() {
+        gameState.history.push(JSON.stringify({
+            driveNum: gameState.driveNum,
+            down: gameState.down,
+            distance: gameState.distance,
+            ballOn: gameState.ballOn,
+            startTime: gameState.startTime,
+            endTime: gameState.endTime
+        }));
+    }
+
+    function undoLastPlay() {
+        if (gameState.history.length === 0) return;
+        gameState = Object.assign(gameState, JSON.parse(gameState.history.pop()));
+        updateHUD();
+        document.getElementById('displayDriveTimes').innerText = `Start: ${gameState.startTime} | End: ${gameState.endTime}`;
+    }
+
+    function logPlay() {
+        if (!activeCall) {
+            alert("Enter a valid Call # first Coach!");
+            return;
+        }
+
+        let gain = parseInt(inputYardsBuffer) || 0;
+        let initialSit = `${["1st", "2nd", "3rd", "4th"][gameState.down - 1]} & ${gameState.distance}`;
+        let initialBallOn = gameState.ballOn;
+        let playerTgt = selectedPlayer || (activeCall.type === 'Boeing' ? "Butler to Pass" : "Ball Carrier");
+
+        saveHistory();
+
+        let nextSit = "";
+        if (activeSpecial === "Touchdown") {
+            nextSit = "TD!";
+            gameState.ballOn = 100;
+            quickMarkClock('end');
+        } else if (activeSpecial === "Turnover") {
+            nextSit = "Turnover";
+            quickMarkClock('end');
+        } else if (activeSpecial.startsWith("Penalty")) {
+            gameState.ballOn = Math.max(1, Math.min(99, gameState.ballOn + gain));
+            gameState.distance = Math.max(1, gameState.distance - gain);
+            nextSit = `${["1st", "2nd", "3rd", "4th"][gameState.down - 1]} & ${gameState.distance}`;
+        } else {
+            gameState.ballOn = Math.min(99, gameState.ballOn + gain);
+            let toGoal = 100 - gameState.ballOn;
+            if (gain >= gameState.distance) {
+                gameState.down = 1;
+                gameState.distance = Math.min(10, toGoal);
+                nextSit = "1st & " + (gameState.distance >= toGoal ? "Goal" : gameState.distance);
+            } else {
+                if (gameState.down < 4) {
+                    gameState.down += 1;
+                    gameState.distance -= gain;
+                    nextSit = `${["1st", "2nd", "3rd", "4th"][gameState.down - 1]} & ${gameState.distance}`;
+                } else {
+                    nextSit = "Turnover on Downs";
+                    quickMarkClock('end');
+                }
+            }
+        }
+
+        const payload = {
+            timestamp: new Date().toLocaleTimeString(),
+            drive: gameState.driveNum,
+            driveStart: gameState.startTime,
+            driveEnd: gameState.endTime,
+            situation: initialSit,
+            ballOn: initialBallOn,
+            callNum: activeCall.num,
+            play: activeCall.name,
+            type: activeCall.type === "Cadillac" ? "Run" : "Pass",
+            formation: activeCall.form,
+            carrier: playerTgt,
+            yards: gain,
+            nextSituation: nextSit
+        };
+
+        if (GOOGLE_SCRIPT_URL !== "https://script.google.com/macros/s/.../exec)") {
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(err => console.log("Sync error:", err));
+        }
+
+        updateHUD();
+        inputCallBuffer = "";
+        inputYardsBuffer = "0";
+        updateYardsDisplay();
+        resolveCallNumber(null);
+        setNumpadMode('call');
+        selectSpecial('Normal', document.querySelector('#specialGrid .pill-btn'));
+    }
+
+    updateHUD();
+    renderPlayerPills(false);
+</script>
+</body>
+</html>
