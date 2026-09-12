@@ -43,110 +43,150 @@
             display: flex;
             flex-direction: column;
             height: 100dvh;
-            padding: calc(env(safe-area-inset-top) + 6px) 12px calc(env(safe-area-inset-bottom) + 8px) 12px;
-            gap: 8px;
+            padding: calc(env(safe-area-inset-top) + 4px) 10px calc(env(safe-area-inset-bottom) + 6px) 10px;
+            gap: 5px;
+            position: relative;
         }
 
-        /* 1. TOP HUD */
+        /* 1. HUD */
         .hud-grid {
             display: grid;
             grid-template-columns: 0.8fr 1.4fr 1.1fr 0.9fr;
             gap: 6px;
             background: var(--surface);
             border: 1px solid var(--border);
-            padding: 8px 10px;
-            border-radius: 14px;
+            padding: 6px 10px;
+            border-radius: 12px;
             text-align: center;
             flex-shrink: 0;
         }
-        .hud-cell div { font-size: 11px; color: var(--text-muted); font-weight: 800; letter-spacing: 0.5px; }
-        .hud-cell span { display: block; font-size: 18px; font-weight: 900; color: #fff; margin-top: 1px; }
+        .hud-cell div { font-size: 10px; color: var(--text-muted); font-weight: 800; letter-spacing: 0.5px; }
+        .hud-cell span { display: block; font-size: 17px; font-weight: 900; color: #fff; margin-top: 1px; }
         .hud-cell span.highlight { color: var(--accent-gold); }
 
-        /* 2. DRIVE BAR & TIME BUTTONS */
+        /* 2. LIVE TEAM EFFICIENCY TICKER */
+        .live-stats-box {
+            background: #111827;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            padding: 5px 6px;
+            display: grid;
+            grid-template-columns: 1.1fr 1.1fr 1.1fr 1.2fr 0.9fr;
+            gap: 4px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .stat-label { font-size: 8px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+        .stat-val { font-size: 12px; font-weight: 900; color: #fff; }
+        .stat-val.gold { color: var(--accent-gold); }
+        .stat-val.run { color: var(--cadillac); }
+        .stat-val.pass { color: var(--boeing); }
+        .stat-val.succ { color: #4ade80; }
+
+        /* 3. SCOREBOARD COUNTDOWN DRIVE STRIP */
         .drive-strip {
             display: flex;
             align-items: center;
             justify-content: space-between;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 6px 12px;
-            font-size: 13px;
+            border-radius: 10px;
+            padding: 5px 8px;
+            font-size: 11px;
             flex-shrink: 0;
+            gap: 6px;
         }
-        .drive-time-txt { font-weight: 700; color: var(--text-muted); }
-        .drive-btn-group { display: flex; gap: 6px; }
+        .qtr-btn {
+            background: #2d240d;
+            border: 1.5px solid var(--accent-gold);
+            color: var(--accent-gold);
+            font-weight: 900;
+            font-size: 12px;
+            border-radius: 6px;
+            padding: 5px 8px;
+        }
+        .drive-time-txt {
+            flex: 1;
+            font-weight: 700;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .drive-time-txt b { color: #fff; cursor: pointer; text-decoration: underline dotted var(--accent-gold); }
+        .drive-btn-group { display: flex; gap: 4px; }
         .drive-action-btn {
             background: var(--surface-elevated);
             color: var(--text-main);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 8px 14px;
-            font-size: 13px;
+            border-radius: 6px;
+            padding: 5px 8px;
+            font-size: 11px;
             font-weight: 800;
         }
         .drive-action-btn:active { background: var(--accent-gold); color: #000; }
 
-        /* 3. HERO CALL BANNER */
+        /* 4. HERO CALL BANNER */
         .call-banner {
             background: var(--surface);
             border: 2px solid var(--border);
-            border-radius: 14px;
-            padding: 10px 14px;
+            border-radius: 12px;
+            padding: 6px 10px;
             display: flex;
             align-items: center;
-            min-height: 64px;
+            min-height: 52px;
             flex-shrink: 0;
         }
         .call-banner.cadillac-active { border-color: var(--cadillac); }
         .call-banner.boeing-active { border-color: var(--boeing); }
         .call-num-badge {
-            font-size: 32px;
+            font-size: 26px;
             font-weight: 900;
             background: var(--surface-elevated);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            min-width: 64px;
-            height: 52px;
+            border-radius: 8px;
+            min-width: 52px;
+            height: 42px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--accent-gold);
         }
-        .call-meta {
-            flex: 1;
-            margin-left: 14px;
-        }
-        .call-meta .play-title { font-size: 17px; font-weight: 900; line-height: 1.1; }
-        .call-meta .play-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; font-weight: 600; }
+        .call-meta { flex: 1; margin-left: 10px; }
+        .call-meta .play-title { font-size: 15px; font-weight: 900; line-height: 1.1; }
+        .call-meta .play-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; font-weight: 600; }
 
-        /* 4. KEYPAD SECTION */
+        /* 5. KEYPAD SECTION */
         .keypad-section {
             flex: 1;
             display: flex;
             flex-direction: column;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 8px;
-            gap: 8px;
+            border-radius: 12px;
+            padding: 5px;
+            gap: 5px;
             min-height: 0;
         }
         .mode-toggle-row {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 6px;
+            gap: 5px;
             flex-shrink: 0;
         }
         .mode-btn {
-            height: 44px;
-            font-size: 14px;
+            height: 36px;
+            font-size: 12px;
             font-weight: 800;
             background: var(--surface-elevated);
             color: var(--text-muted);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 6px;
         }
         .mode-btn.active {
             background: var(--accent-gold);
@@ -159,57 +199,42 @@
             flex: 1;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 5px;
         }
         .num-key {
             background: var(--surface-elevated);
             border: 1px solid var(--border);
             color: var(--text-main);
-            font-size: 26px;
+            font-size: 22px;
             font-weight: 900;
-            border-radius: 12px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .num-key:active { background: #334155; }
         .num-key.action-key {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 800;
             background: #233148;
             color: #cbd5e1;
         }
 
-        /* 5. PLAYER SELECTION GRID */
-        .selector-box {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            flex-shrink: 0;
-        }
-        .selector-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            font-weight: 800;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            padding: 0 4px;
-        }
+        /* SPECIAL EVENT MODIFIER PANEL */
         .pill-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
+            gap: 5px;
         }
         .pill-btn {
             background: var(--surface);
             border: 1.5px solid var(--border);
             color: var(--text-main);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 800;
-            border-radius: 10px;
+            border-radius: 8px;
             text-align: center;
-            height: 48px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -223,20 +248,52 @@
             font-weight: 900;
         }
 
-        /* 6. BOTTOM COMMAND BUTTONS */
+        /* 6. TARGET SELECTION */
+        .selector-box {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex-shrink: 0;
+        }
+        .selector-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            padding: 0 4px;
+        }
+
+        /* 7. LOG DRAWER TOGGLE BAR */
+        .drawer-bar {
+            background: #1e293b;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 5px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .drawer-bar span { color: var(--accent-gold); font-weight: 800; }
+
+        /* 8. BOTTOM COMMAND BUTTONS */
         .bottom-actions {
             display: grid;
             grid-template-columns: 3fr 1fr;
-            gap: 8px;
+            gap: 6px;
             flex-shrink: 0;
         }
         .big-log-btn {
             background: var(--cadillac);
             color: #042f13;
             border: none;
-            border-radius: 14px;
-            height: 60px;
-            font-size: 20px;
+            border-radius: 10px;
+            height: 50px;
+            font-size: 18px;
             font-weight: 900;
             display: flex;
             align-items: center;
@@ -248,12 +305,128 @@
             background: var(--surface-elevated);
             color: #cbd5e1;
             border: 1px solid var(--border);
-            border-radius: 14px;
-            font-size: 15px;
+            border-radius: 10px;
+            font-size: 14px;
             font-weight: 800;
-            height: 60px;
+            height: 50px;
         }
         .undo-btn:active { background: #334155; }
+
+        /* 9. SLIDE-UP ANALYTICS & GAME LOG HUB */
+        .log-modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-main);
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            padding: calc(env(safe-area-inset-top) + 6px) 10px calc(env(safe-area-inset-bottom) + 8px) 10px;
+            gap: 6px;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 6px;
+        }
+        .modal-header h3 { margin: 0; font-size: 16px; color: var(--accent-gold); }
+        .close-modal-btn {
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 13px;
+        }
+        
+        /* Modal Tabs */
+        .hub-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 5px;
+        }
+        .hub-tab-btn {
+            padding: 7px 2px;
+            font-size: 11px;
+            font-weight: 800;
+            background: var(--surface-elevated);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            text-align: center;
+        }
+        .hub-tab-btn.active {
+            background: var(--accent-gold);
+            color: #000;
+            font-weight: 900;
+        }
+
+        .hub-content-view {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--surface);
+            padding: 8px;
+        }
+
+        /* Overview Breakdown Cards */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .card-stat {
+            background: #1e293b;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .card-stat-title { font-size: 10px; color: var(--text-muted); font-weight: 800; text-transform: uppercase; }
+        .card-stat-number { font-size: 18px; font-weight: 900; color: #fff; }
+
+        .mirror-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            text-align: left;
+        }
+        .mirror-table th, .mirror-table td {
+            padding: 6px 4px;
+            border-bottom: 1px solid var(--border);
+        }
+        .mirror-table th {
+            background: #1e293b;
+            color: var(--text-muted);
+            font-size: 10px;
+            text-transform: uppercase;
+            position: sticky;
+            top: 0;
+        }
+        .modal-footer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .export-btn {
+            background: #0284c7;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            height: 44px;
+            font-size: 13px;
+            font-weight: 900;
+        }
+        .export-btn:active { background: #0369a1; }
     </style>
 </head>
 <body>
@@ -280,17 +453,45 @@
         </div>
     </div>
 
-    <!-- 2. DRIVE BAR -->
+    <!-- 2. LIVE TEAM TOTALS & EFFICIENCY TICKER -->
+    <div class="live-stats-box">
+        <div class="stat-item">
+            <span class="stat-label">Plays/Yds</span>
+            <span class="stat-val gold"><span id="statPlays">0</span>/<span id="statTotYds">0</span>y</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">Run (Cad)</span>
+            <span class="stat-val run"><span id="statRushPlays">0</span>/<span id="statRushYds">0</span>y</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">Pass (Boe)</span>
+            <span class="stat-val pass"><span id="statPassPlays">0</span>/<span id="statPassYds">0</span>y</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">Succ. (4+y)</span>
+            <span class="stat-val succ"><span id="statSuccRate">0%</span> (<span id="statSuccCount">0</span>)</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">TOP</span>
+            <span class="stat-val" id="statTOP">0:00</span>
+        </div>
+    </div>
+
+    <!-- 3. SCOREBOARD COUNTDOWN DRIVE BAR -->
     <div class="drive-strip">
-        <span class="drive-time-txt">⏱️ <b id="displayDriveTimes">Start: --:-- | End: --:--</b></span>
+        <button type="button" class="qtr-btn" id="qtrSelectorBtn" onclick="toggleQuarter()">Q1</button>
+        <span class="drive-time-txt">
+            <span onclick="promptEditClock('start')">In: <b id="displayStartTime">10:00</b></span> | 
+            <span onclick="promptEditClock('end')">Out: <b id="displayEndTime">--:--</b></span>
+        </span>
         <div class="drive-btn-group">
-            <button type="button" class="drive-action-btn" onclick="quickMarkClock('start')">In</button>
-            <button type="button" class="drive-action-btn" onclick="quickMarkClock('end')">Out</button>
+            <button type="button" class="drive-action-btn" onclick="quickStampClock('start')">In</button>
+            <button type="button" class="drive-action-btn" onclick="quickStampClock('end')">Out</button>
             <button type="button" class="drive-action-btn" style="background:#2d240d; border-color:var(--accent-gold); color:var(--accent-gold);" onclick="promptNewDrive()">+ New</button>
         </div>
     </div>
 
-    <!-- 3. HERO CALL BANNER -->
+    <!-- 4. HERO CALL BANNER -->
     <div class="call-banner" id="callBannerDisplay">
         <div class="call-num-badge" id="bannerCallNum">--</div>
         <div class="call-meta">
@@ -299,7 +500,7 @@
         </div>
     </div>
 
-    <!-- 4. KEYPAD SECTION -->
+    <!-- 5. KEYPAD SECTION -->
     <div class="keypad-section">
         <div class="mode-toggle-row">
             <button type="button" class="mode-btn active" id="tabModeCall" onclick="setNumpadMode('call')">Call #</button>
@@ -334,27 +535,124 @@
         </div>
     </div>
 
-    <!-- 5. TARGET SELECTION -->
+    <!-- 6. TARGET SELECTION -->
     <div class="selector-box">
         <div class="selector-header">
             <span id="playerGridLabel">Ball Carrier (Run)</span>
-            <span id="currentYardsLabel" style="color: var(--accent-gold); font-size: 14px;">Gain: 0 Yds</span>
+            <span id="currentYardsLabel" style="color: var(--accent-gold); font-size: 12px;">Gain: 0 Yds</span>
         </div>
         <div class="pill-grid" id="playerPillGrid"></div>
     </div>
 
-    <!-- 6. BOTTOM COMMAND BUTTONS -->
+    <!-- 7. LOG DRAWER PREVIEW BAR -->
+    <div class="drawer-bar" onclick="openLogModal()">
+        <span>📊 Team Stats & Log (<span id="playCountBadge">0</span> Plays)</span>
+        <div id="recentPlayPreview" style="color:#cbd5e1;">Tap to view full stats</div>
+    </div>
+
+    <!-- 8. BOTTOM COMMAND BUTTONS -->
     <div class="bottom-actions">
         <button type="button" class="big-log-btn" onclick="logPlay()">LOG PLAY</button>
         <button type="button" class="undo-btn" onclick="undoLastPlay()">UNDO</button>
     </div>
 
+    <!-- 9. SLIDE-UP ANALYTICS & LOG MODAL -->
+    <div class="log-modal" id="logModal">
+        <div class="modal-header">
+            <h3>📊 Sideline Analytics Hub</h3>
+            <button type="button" class="close-modal-btn" onclick="closeLogModal()">✖ Close</button>
+        </div>
+        
+        <!-- Tab Navigation -->
+        <div class="hub-tabs">
+            <button type="button" class="hub-tab-btn active" id="tabBtnTeam" onclick="switchHubTab('team')">Team Totals</button>
+            <button type="button" class="hub-tab-btn" id="tabBtnPlayers" onclick="switchHubTab('players')">Player Stats</button>
+            <button type="button" class="hub-tab-btn" id="tabBtnLog" onclick="switchHubTab('log')">Play Log</button>
+        </div>
+
+        <!-- VIEW 1: Team Overview -->
+        <div class="hub-content-view" id="viewTeamStats">
+            <div class="analytics-grid">
+                <div class="card-stat">
+                    <span class="card-stat-title">Plays / Net Yards</span>
+                    <span class="card-stat-number"><span id="overviewPlays">0</span> / <span id="overviewNetYards" style="color:var(--accent-gold);">0</span>y</span>
+                </div>
+                <div class="card-stat">
+                    <span class="card-stat-title">Possession Time</span>
+                    <span class="card-stat-number" id="overviewTOP">0:00</span>
+                </div>
+                <div class="card-stat">
+                    <span class="card-stat-title">Cadillac (Run)</span>
+                    <span class="card-stat-number" style="color:var(--cadillac);"><span id="overviewRushPlays">0</span>p / <span id="overviewRushYards">0</span>y</span>
+                    <span style="font-size:10px; color:var(--text-muted);"><span id="overviewRushAvg">0.0</span> yds/carry</span>
+                </div>
+                <div class="card-stat">
+                    <span class="card-stat-title">Boeing (Pass)</span>
+                    <span class="card-stat-number" style="color:var(--boeing);"><span id="overviewPassPlays">0</span>p / <span id="overviewPassYards">0</span>y</span>
+                    <span style="font-size:10px; color:var(--text-muted);"><span id="overviewPassAvg">0.0</span> yds/att</span>
+                </div>
+                <div class="card-stat">
+                    <span class="card-stat-title">Successful Plays (4+ Yds)</span>
+                    <span class="card-stat-number" style="color:#4ade80;"><span id="overviewSuccPlays">0</span> (<span id="overviewSuccRate">0%</span>)</span>
+                    <span style="font-size:10px; color:var(--text-muted);">Standard of efficiency</span>
+                </div>
+                <div class="card-stat">
+                    <span class="card-stat-title">Unsuccessful (< 4 Yds)</span>
+                    <span class="card-stat-number" style="color:#facc15;"><span id="overviewUnsuccPlays">0</span> (<span id="overviewUnsuccRate">0%</span>)</span>
+                    <span style="font-size:10px; color:var(--text-muted);">Short/failed gains</span>
+                </div>
+                <div class="card-stat" style="grid-column: span 2;">
+                    <span class="card-stat-title">Negative / Stuffed Plays (&le; 0 Yds)</span>
+                    <span class="card-stat-number" style="color:var(--danger);"><span id="overviewNegPlays">0</span> (<span id="overviewNegRate">0%</span>)</span>
+                    <span style="font-size:10px; color:var(--text-muted);">Zero gain, tackles for loss, and sacks</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: Player Production Table -->
+        <div class="hub-content-view" id="viewPlayerStats" style="display:none; padding:0;">
+            <table class="mirror-table">
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>Touches</th>
+                        <th>Yds</th>
+                        <th>4+ Yds</th>
+                        <th>&lt; 4 Yds</th>
+                        <th>&le; 0 Yds</th>
+                    </tr>
+                </thead>
+                <tbody id="playerStatsTableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- VIEW 3: Play-by-Play Mirror Table -->
+        <div class="hub-content-view" id="viewLogMirror" style="display:none; padding:0;">
+            <table class="mirror-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Dr.</th>
+                        <th>Sit.</th>
+                        <th>Call</th>
+                        <th>Carrier/Target</th>
+                        <th>Yds</th>
+                        <th>Next</th>
+                    </tr>
+                </thead>
+                <tbody id="mirrorTableBody"></tbody>
+            </table>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="export-btn" onclick="exportToCSV()">📥 Export CSV</button>
+            <button type="button" class="undo-btn" style="background:#450a0a; border-color:var(--danger); color:#fca5a5;" onclick="undoLastPlay()">↩ Undo Snap</button>
+        </div>
+    </div>
+
 </div>
 
 <script>
-    // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
-    const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
-
     const playbook = {
         1: { name: "19 Sweep", type: "Cadillac", form: "Wing Left" },
         2: { name: "11 Power Sweep", type: "Cadillac", form: "Wing Left" },
@@ -453,16 +751,187 @@
     let activeSpecial = "Normal";
     let selectedPlayer = "";
     let activeCall = null;
+    let loggedPlays = [];
+
+    const quarters = ["Q1", "Q2", "Q3", "Q4"];
+    let currentQuarterIdx = 0;
 
     let gameState = {
         driveNum: 1,
         down: 1,
         distance: 10,
         ballOn: 35,
-        startTime: "--:--",
+        startTime: "10:00",
         endTime: "--:--",
+        driveHistory: {},
         history: []
     };
+
+    function toggleQuarter() {
+        currentQuarterIdx = (currentQuarterIdx + 1) % quarters.length;
+        document.getElementById('qtrSelectorBtn').innerText = quarters[currentQuarterIdx];
+    }
+
+    function parseClockToSeconds(str) {
+        if (!str || str.includes("--:--")) return null;
+        let parts = str.trim().split(" ");
+        let timeStr = parts.length > 1 ? parts[1] : parts[0];
+        let [m, s] = timeStr.split(":").map(Number);
+        if (isNaN(m) || isNaN(s)) return null;
+        return (m * 60) + s;
+    }
+
+    function calculateTotalTOP() {
+        let totalSecs = 0;
+        for (let d in gameState.driveHistory) {
+            let drv = gameState.driveHistory[d];
+            let startSec = parseClockToSeconds(drv.start);
+            let endSec = parseClockToSeconds(drv.end);
+            if (startSec !== null && endSec !== null && startSec >= endSec) {
+                totalSecs += (startSec - endSec);
+            }
+        }
+        let mins = Math.floor(totalSecs / 60);
+        let secs = totalSecs % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function updateLiveStatsBar() {
+        let totalPlays = loggedPlays.length;
+        let totYds = 0, rushPlays = 0, rushYds = 0, passPlays = 0, passYds = 0;
+        let succCount = 0, unsuccCount = 0, negCount = 0;
+
+        loggedPlays.forEach(p => {
+            totYds += p.yards;
+            if (p.type === 'Run') {
+                rushPlays++;
+                rushYds += p.yards;
+            } else if (p.type === 'Pass') {
+                passPlays++;
+                passYds += p.yards;
+            }
+
+            if (p.yards >= 4) succCount++;
+            else unsuccCount++;
+
+            if (p.yards <= 0) negCount++;
+        });
+
+        let succRate = totalPlays > 0 ? Math.round((succCount / totalPlays) * 100) : 0;
+        let unsuccRate = totalPlays > 0 ? Math.round((unsuccCount / totalPlays) * 100) : 0;
+        let negRate = totalPlays > 0 ? Math.round((negCount / totalPlays) * 100) : 0;
+
+        // Sideline Pinned Ticker
+        document.getElementById('statPlays').innerText = totalPlays;
+        document.getElementById('statTotYds').innerText = totYds;
+        document.getElementById('statRushPlays').innerText = rushPlays;
+        document.getElementById('statRushYds').innerText = rushYds;
+        document.getElementById('statPassPlays').innerText = passPlays;
+        document.getElementById('statPassYds').innerText = passYds;
+        document.getElementById('statSuccCount').innerText = succCount;
+        document.getElementById('statSuccRate').innerText = `${succRate}%`;
+        document.getElementById('statTOP').innerText = calculateTotalTOP();
+
+        // Hub Overview Cards
+        document.getElementById('overviewPlays').innerText = totalPlays;
+        document.getElementById('overviewNetYards').innerText = totYds;
+        document.getElementById('overviewTOP').innerText = calculateTotalTOP();
+        document.getElementById('overviewRushPlays').innerText = rushPlays;
+        document.getElementById('overviewRushYards').innerText = rushYds;
+        document.getElementById('overviewRushAvg').innerText = rushPlays > 0 ? (rushYds / rushPlays).toFixed(1) : "0.0";
+        document.getElementById('overviewPassPlays').innerText = passPlays;
+        document.getElementById('overviewPassYards').innerText = passYds;
+        document.getElementById('overviewPassAvg').innerText = passPlays > 0 ? (passYds / passPlays).toFixed(1) : "0.0";
+        document.getElementById('overviewSuccPlays').innerText = succCount;
+        document.getElementById('overviewSuccRate').innerText = `${succRate}%`;
+        document.getElementById('overviewUnsuccPlays').innerText = unsuccCount;
+        document.getElementById('overviewUnsuccRate').innerText = `${unsuccRate}%`;
+        document.getElementById('overviewNegPlays').innerText = negCount;
+        document.getElementById('overviewNegRate').innerText = `${negRate}%`;
+
+        renderPlayerStatsTable();
+    }
+
+    function renderPlayerStatsTable() {
+        const tbody = document.getElementById('playerStatsTableBody');
+        tbody.innerHTML = "";
+
+        let playersMap = {};
+        loggedPlays.forEach(p => {
+            let key = p.carrier;
+            if (!playersMap[key]) {
+                playersMap[key] = { touches: 0, yards: 0, succ: 0, unsucc: 0, neg: 0 };
+            }
+            playersMap[key].touches++;
+            playersMap[key].yards += p.yards;
+            if (p.yards >= 4) playersMap[key].succ++;
+            else playersMap[key].unsucc++;
+            if (p.yards <= 0) playersMap[key].neg++;
+        });
+
+        let sorted = Object.keys(playersMap).sort((a, b) => playersMap[b].touches - playersMap[a].touches);
+
+        if (sorted.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:16px;">No touches logged yet</td></tr>`;
+            return;
+        }
+
+        sorted.forEach(name => {
+            let s = playersMap[name];
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><b>${name}</b></td>
+                <td style="font-weight:900;">${s.touches}</td>
+                <td style="font-weight:900; color:${s.yards >= 0 ? '#4ade80' : '#f87171'};">${s.yards >= 0 ? '+' : ''}${s.yards}</td>
+                <td style="color:#4ade80; font-weight:800;">${s.succ}</td>
+                <td style="color:#facc15;">${s.unsucc}</td>
+                <td style="color:var(--danger); font-weight:800;">${s.neg}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function switchHubTab(tab) {
+        document.querySelectorAll('.hub-tabs .hub-tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('viewTeamStats').style.display = 'none';
+        document.getElementById('viewPlayerStats').style.display = 'none';
+        document.getElementById('viewLogMirror').style.display = 'none';
+
+        if (tab === 'team') {
+            document.getElementById('tabBtnTeam').classList.add('active');
+            document.getElementById('viewTeamStats').style.display = 'block';
+        } else if (tab === 'players') {
+            document.getElementById('tabBtnPlayers').classList.add('active');
+            document.getElementById('viewPlayerStats').style.display = 'block';
+        } else if (tab === 'log') {
+            document.getElementById('tabBtnLog').classList.add('active');
+            document.getElementById('viewLogMirror').style.display = 'block';
+        }
+    }
+
+    function quickStampClock(type) {
+        let qtr = quarters[currentQuarterIdx];
+        let defaultTime = type === 'start' ? "10:00" : "00:00";
+        let timePrompt = prompt(`Scoreboard Clock (${qtr}):`, `${qtr} ${defaultTime}`);
+        if (timePrompt) {
+            if (type === 'start') {
+                gameState.startTime = timePrompt;
+                document.getElementById('displayStartTime').innerText = timePrompt;
+            } else {
+                gameState.endTime = timePrompt;
+                document.getElementById('displayEndTime').innerText = timePrompt;
+            }
+            if (!gameState.driveHistory[gameState.driveNum]) {
+                gameState.driveHistory[gameState.driveNum] = {};
+            }
+            gameState.driveHistory[gameState.driveNum][type] = timePrompt;
+            updateLiveStatsBar();
+        }
+    }
+
+    function promptEditClock(type) {
+        quickStampClock(type);
+    }
 
     function setNumpadMode(mode) {
         numpadMode = mode;
@@ -571,16 +1040,6 @@
         btn.classList.add('active');
     }
 
-    function quickMarkClock(type) {
-        const now = new Date();
-        let hr = now.getHours() % 12 || 12;
-        let mn = now.getMinutes().toString().padStart(2, '0');
-        const tStr = `${hr}:${mn}`;
-        if (type === 'start') gameState.startTime = tStr;
-        else gameState.endTime = tStr;
-        document.getElementById('displayDriveTimes').innerText = `Start: ${gameState.startTime} | End: ${gameState.endTime}`;
-    }
-
     function promptNewDrive() {
         const startYd = prompt("Starting Field Position (Own yardline):", "35");
         if (!startYd) return;
@@ -589,10 +1048,18 @@
         gameState.down = 1;
         gameState.distance = 10;
         gameState.ballOn = parseInt(startYd) || 35;
-        quickMarkClock('start');
+        gameState.startTime = `${quarters[currentQuarterIdx]} 10:00`;
         gameState.endTime = "--:--";
-        document.getElementById('displayDriveTimes').innerText = `Start: ${gameState.startTime} | End: ${gameState.endTime}`;
+        
+        if (!gameState.driveHistory[gameState.driveNum]) {
+            gameState.driveHistory[gameState.driveNum] = {};
+        }
+        gameState.driveHistory[gameState.driveNum].start = gameState.startTime;
+
+        document.getElementById('displayStartTime').innerText = gameState.startTime;
+        document.getElementById('displayEndTime').innerText = gameState.endTime;
         updateHUD();
+        updateLiveStatsBar();
     }
 
     function updateHUD() {
@@ -614,15 +1081,27 @@
             distance: gameState.distance,
             ballOn: gameState.ballOn,
             startTime: gameState.startTime,
-            endTime: gameState.endTime
+            endTime: gameState.endTime,
+            driveHistory: JSON.parse(JSON.stringify(gameState.driveHistory)),
+            loggedPlays: JSON.parse(JSON.stringify(loggedPlays))
         }));
     }
 
     function undoLastPlay() {
-        if (gameState.history.length === 0) return;
-        gameState = Object.assign(gameState, JSON.parse(gameState.history.pop()));
+        if (gameState.history.length === 0) {
+            alert("No plays logged yet!");
+            return;
+        }
+        let prevState = JSON.parse(gameState.history.pop());
+        loggedPlays = prevState.loggedPlays || [];
+        delete prevState.loggedPlays;
+        gameState = Object.assign(gameState, prevState);
+        
         updateHUD();
-        document.getElementById('displayDriveTimes').innerText = `Start: ${gameState.startTime} | End: ${gameState.endTime}`;
+        document.getElementById('displayStartTime').innerText = gameState.startTime;
+        document.getElementById('displayEndTime').innerText = gameState.endTime;
+        renderMirrorTable();
+        updateLiveStatsBar();
     }
 
     function logPlay() {
@@ -642,10 +1121,8 @@
         if (activeSpecial === "Touchdown") {
             nextSit = "TD!";
             gameState.ballOn = 100;
-            quickMarkClock('end');
         } else if (activeSpecial === "Turnover") {
             nextSit = "Turnover";
-            quickMarkClock('end');
         } else if (activeSpecial.startsWith("Penalty")) {
             gameState.ballOn = Math.max(1, Math.min(99, gameState.ballOn + gain));
             gameState.distance = Math.max(1, gameState.distance - gain);
@@ -664,12 +1141,12 @@
                     nextSit = `${["1st", "2nd", "3rd", "4th"][gameState.down - 1]} & ${gameState.distance}`;
                 } else {
                     nextSit = "Turnover on Downs";
-                    quickMarkClock('end');
                 }
             }
         }
 
         const payload = {
+            playNum: loggedPlays.length + 1,
             timestamp: new Date().toLocaleTimeString(),
             drive: gameState.driveNum,
             driveStart: gameState.startTime,
@@ -685,14 +1162,9 @@
             nextSituation: nextSit
         };
 
-        if (GOOGLE_SCRIPT_URL !== "https://script.google.com/macros/s/.../exec)") {
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }).catch(err => console.log("Sync error:", err));
-        }
+        loggedPlays.unshift(payload);
+        renderMirrorTable();
+        updateLiveStatsBar();
 
         updateHUD();
         inputCallBuffer = "";
@@ -703,8 +1175,80 @@
         selectSpecial('Normal', document.querySelector('#specialGrid .pill-btn'));
     }
 
+    function renderMirrorTable() {
+        const tbody = document.getElementById('mirrorTableBody');
+        tbody.innerHTML = "";
+        document.getElementById('playCountBadge').innerText = loggedPlays.length;
+
+        if (loggedPlays.length > 0) {
+            let last = loggedPlays[0];
+            document.getElementById('recentPlayPreview').innerText = `#${last.callNum} ${last.play} (${last.yards >= 0 ? '+' : ''}${last.yards}y)`;
+        } else {
+            document.getElementById('recentPlayPreview').innerText = "Tap to view full stats";
+        }
+
+        loggedPlays.forEach(p => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><b>${p.playNum}</b></td>
+                <td>D${p.drive}</td>
+                <td>${p.situation}</td>
+                <td style="color:var(--accent-gold); font-weight:900;">#${p.callNum}</td>
+                <td>${p.carrier}</td>
+                <td style="font-weight:900; color:${p.yards >= 0 ? '#4ade80' : '#f87171'};">${p.yards >= 0 ? '+' : ''}${p.yards}</td>
+                <td style="color:#38bdf8;">${p.nextSituation}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function exportToCSV() {
+        if (loggedPlays.length === 0) {
+            alert("No plays to export yet Coach!");
+            return;
+        }
+
+        let headers = ["Play_#", "Drive_#", "Drive_Start", "Drive_End", "Situation", "Ball_On", "Call_#", "Play_Name", "Type", "Formation", "Carrier_Target", "Yards", "Next_Situation", "Timestamp"];
+        let rows = [...loggedPlays].reverse().map(p => [
+            p.playNum,
+            p.drive,
+            `"${p.driveStart}"`,
+            `"${p.driveEnd}"`,
+            `"${p.situation}"`,
+            p.ballOn,
+            p.callNum,
+            `"${p.play}"`,
+            `"${p.type}"`,
+            `"${p.formation}"`,
+            `"${p.carrier}"`,
+            p.yards,
+            `"${p.nextSituation}"`,
+            `"${p.timestamp}"`
+        ]);
+
+        let csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+        let encodedUri = encodeURI(csvContent);
+        let link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `10U_GameLog_${new Date().toISOString().slice(0,10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    function openLogModal() {
+        document.getElementById('logModal').style.display = 'flex';
+        updateLiveStatsBar();
+    }
+
+    function closeLogModal() {
+        document.getElementById('logModal').style.display = 'none';
+    }
+
+    gameState.driveHistory[1] = { start: "Q1 10:00", end: "--:--" };
     updateHUD();
     renderPlayerPills(false);
+    updateLiveStatsBar();
 </script>
 </body>
 </html>
