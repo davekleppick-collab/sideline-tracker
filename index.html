@@ -23,7 +23,7 @@
             --cadillac: #22c55e;
             --boeing: #38bdf8;
             --text-main: #ffffff;
-            --text-muted: #b8b8b8; /* Enhanced small font contrast */
+            --text-muted: #b8b8b8;
             --danger: #ef4444;
         }
 
@@ -352,10 +352,10 @@
         .carrier-strip-val { font-size: 14px; font-weight: 900; color: #fff; display: flex; align-items: center; gap: 6px; }
         .carrier-strip-val b { color: var(--accent-gold); }
 
-        /* 7. PROMINENT STATS & LOGS BUTTON */
+        /* 7. DISTINCT STATS & LOGS BUTTON (RICH ATHLETIC GOLD ACCENT) */
         .prominent-logs-btn {
-            background: #171717;
-            border: 1.5px solid var(--accent-gold);
+            background: #1c1806;
+            border: 2px solid var(--accent-gold);
             border-radius: 10px;
             height: 42px;
             display: flex;
@@ -367,18 +367,19 @@
             color: var(--accent-gold);
             cursor: pointer;
             flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(234, 179, 8, 0.2);
         }
         .prominent-logs-btn:active { background: var(--accent-gold); color: #000; }
         .prominent-logs-btn span.badge {
             background: #000000;
-            color: #ffffff;
-            border: 1px solid #333333;
+            color: var(--accent-gold);
+            border: 1px solid var(--gold-border);
             padding: 2px 8px;
             border-radius: 6px;
             font-size: 12px;
         }
 
-        /* 8. BOTTOM COMMAND BUTTONS */
+        /* 8. BOTTOM COMMAND BUTTONS (HIGH-CONTRAST CRISP WHITE LOG PLAY BUTTON) */
         .bottom-actions {
             display: grid;
             grid-template-columns: 2.5fr 0.75fr 0.75fr;
@@ -386,9 +387,9 @@
             flex-shrink: 0;
         }
         .big-log-btn {
-            background: var(--accent-gold);
+            background: #ffffff;
             color: #000000;
-            border: none;
+            border: 2px solid var(--accent-gold);
             border-radius: 10px;
             height: 50px;
             font-size: 19px;
@@ -398,8 +399,9 @@
             justify-content: center;
             letter-spacing: 0.5px;
             cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
         }
-        .big-log-btn:active { background: #ca8a04; transform: scale(0.98); }
+        .big-log-btn:active { background: var(--accent-gold); color: #000000; transform: scale(0.98); }
         .history-btn {
             background: #171717;
             color: #ffffff;
@@ -418,7 +420,7 @@
         .history-btn:active { background: #262626; transform: scale(0.96); }
         .history-btn.disabled { opacity: 0.3; pointer-events: none; }
 
-        /* 9. BOTTOM RUNNING STATS BAR (MOVED TO ABSOLUTE BOTTOM) */
+        /* 9. BOTTOM RUNNING STATS BAR */
         .live-stats-box {
             background: #0d0d0d;
             border: 1.5px solid #222222;
@@ -757,13 +759,13 @@
         <span class="carrier-strip-val" id="carrierDisplayVal">🏈 <b>Unassigned</b> ➔ Tap to Pick</span>
     </div>
 
-    <!-- 7. PROMINENT STATS & LOGS BUTTON -->
+    <!-- 7. DISTINCT STATS & LOGS BUTTON -->
     <div class="prominent-logs-btn fast-btn" onclick="openLogModal()">
         <span>📊 STATS & GAME LOG</span>
         <span class="badge" id="playCountBadge">0 Plays</span>
     </div>
 
-    <!-- 8. BOTTOM COMMAND BUTTONS -->
+    <!-- 8. BOTTOM COMMAND BUTTONS (HIGH-CONTRAST CRISP WHITE LOG PLAY) -->
     <div class="bottom-actions">
         <button type="button" class="big-log-btn fast-btn" onclick="logPlay()" id="logButtonMain">LOG PLAY</button>
         <button type="button" class="history-btn fast-btn" id="btnUndoHistory" onclick="undoLastPlay()">
@@ -774,7 +776,7 @@
         </button>
     </div>
 
-    <!-- 9. RUNNING STATS BAR (MOVED TO ABSOLUTE BOTTOM) -->
+    <!-- 9. BOTTOM RUNNING STATS BAR -->
     <div class="live-stats-box">
         <div class="stat-item">
             <span class="stat-label">Curr Drive</span>
@@ -1078,7 +1080,7 @@
     let selectedPlayer = "";
     let activeCall = null;
     let loggedPlays = [];
-    let editingPlayIndex = null; // Track if we are editing an existing play
+    let editingPlayIndex = null;
 
     const quarters = ["Q1", "Q2", "Q3", "Q4"];
     let currentQuarterIdx = 0;
@@ -1096,7 +1098,6 @@
         futureHistory: []
     };
 
-    // --- BIG CIRCULAR PLAYER PICKER MODAL ENGINE ---
     function openPlayerStatsModal() {
         const grid = document.getElementById('playerCirclesGrid');
         grid.innerHTML = "";
@@ -1174,12 +1175,10 @@
         updateYardsDisplay();
     }
 
-    // --- EDIT EXISTING PLAY IN LOG ---
     function editLoggedPlay(index) {
         let p = loggedPlays[index];
         if (!p) return;
 
-        // Load into active screen for editing
         editingPlayIndex = index;
         inputCallBuffer = p.callNum.toString();
         resolveCallNumber(parseInt(inputCallBuffer, 10));
@@ -1193,7 +1192,6 @@
         setNumpadMode('yards');
     }
 
-    // --- YARDLINE MODAL ENGINE ---
     let yardKeypadState = { mode: 'edit', buffer: "", isOpponent: false };
 
     function openYardKeypadModal(mode) {
@@ -1298,7 +1296,6 @@
         closeYardKeypadModal();
     }
 
-    // --- LOCALSTORAGE PERSISTENCE ENGINE ---
     const STORAGE_KEY = "10U_GOLD_SIDELINE_STATE_V10";
 
     function saveStateToLocalStorage() {
@@ -1775,7 +1772,6 @@
 
         saveHistory();
 
-        // If we were editing an existing play, remove the old one first before appending updated
         if (editingPlayIndex !== null) {
             loggedPlays.splice(editingPlayIndex, 1);
             editingPlayIndex = null;
@@ -1878,7 +1874,6 @@
                 <td style="font-weight:900; color:${p.yards >= 0 ? '#ffffff' : '#f87171'};">${p.yards >= 0 ? '+' : ''}${p.yards}</td>
                 <td style="color:var(--accent-gold);">${p.nextSituation}</td>
             `;
-            // Clicking any row lets you edit that play
             bindInstantTouch(tr, () => {
                 editLoggedPlay(idx);
             });
@@ -1959,7 +1954,6 @@
         document.getElementById('logModal').style.display = 'none';
     }
 
-    // --- INITIALIZATION ---
     const restored = loadStateFromLocalStorage();
     if (!restored) {
         gameState.driveHistory[1] = { start: "Q1 10:00", end: "--:--" };
