@@ -8,25 +8,29 @@
     <title>10U Gold Sideline Tracker</title>
     <style>
         :root {
-            --bg-main: #060911;
+            /* North Allegheny Black, Gold & White Theme */
+            --bg-main: #050505;
             
-            --hud-surface: #0f172a;
-            --hud-border: #1e293b;
+            --hud-surface: #111111;
+            --hud-border: #262626;
             
-            --keypad-surface: #131b2e;
-            --keypad-key-bg: #1e293b;
-            --keypad-border: #334155;
+            --keypad-surface: #141414;
+            --keypad-key-bg: #1f1f1f;
+            --keypad-border: #2e2e2e;
             
-            --carrier-surface: #0a192f;
-            --carrier-pill-bg: #112240;
-            --carrier-border: #1e3a8a;
-            --carrier-text: #93c5fd;
+            --carrier-surface: #101010;
+            --carrier-pill-bg: #1c1c1c;
+            --carrier-border: #333333;
+            --carrier-text: #ffffff;
 
-            --accent-gold: #facc15;
+            --accent-gold: #eab308;
+            --gold-subtle: #26200a;
+            --gold-border: #854d0e;
+            
             --cadillac: #22c55e;
             --boeing: #38bdf8;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --text-main: #ffffff;
+            --text-muted: #a3a3a3;
             --danger: #ef4444;
         }
 
@@ -64,8 +68,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #111827;
-            border: 1px solid #1f2937;
+            background: #121212;
+            border: 1px solid #262626;
             border-radius: 8px;
             padding: 4px 10px;
             font-size: 11px;
@@ -73,8 +77,8 @@
             flex-shrink: 0;
         }
         .game-bar-title { color: var(--accent-gold); cursor: pointer; }
-        .game-bar-status { color: #4ade80; font-size: 10px; display: flex; align-items: center; gap: 4px; }
-        .game-bar-status::before { content: '●'; font-size: 10px; }
+        .game-bar-status { color: #ffffff; font-size: 10px; display: flex; align-items: center; gap: 4px; }
+        .game-bar-status::before { content: '●'; font-size: 10px; color: var(--accent-gold); }
 
         /* 1. HUD */
         .hud-grid {
@@ -94,8 +98,8 @@
 
         /* 2. LIVE TEAM TOTALS & CURRENT DRIVE STATS */
         .live-stats-box {
-            background: #090e17;
-            border: 1.5px solid #1e293b;
+            background: #0d0d0d;
+            border: 1.5px solid #222222;
             border-radius: 10px;
             padding: 4px 6px;
             display: grid;
@@ -110,7 +114,7 @@
         .stat-val.gold { color: var(--accent-gold); }
         .stat-val.run { color: var(--cadillac); }
         .stat-val.pass { color: var(--boeing); }
-        .stat-val.succ { color: #4ade80; }
+        .stat-val.succ { color: #ffffff; }
 
         /* 3. SCOREBOARD COUNTDOWN DRIVE STRIP */
         .drive-strip {
@@ -126,7 +130,7 @@
             gap: 6px;
         }
         .qtr-btn {
-            background: #2d240d;
+            background: var(--gold-subtle);
             border: 1.5px solid var(--accent-gold);
             color: var(--accent-gold);
             font-weight: 900;
@@ -145,9 +149,9 @@
         .drive-time-txt b { color: #fff; cursor: pointer; text-decoration: underline dotted var(--accent-gold); }
         .drive-btn-group { display: flex; gap: 4px; }
         .drive-action-btn {
-            background: #1e293b;
+            background: #1c1c1c;
             color: var(--text-main);
-            border: 1px solid var(--hud-border);
+            border: 1px solid #333333;
             border-radius: 6px;
             padding: 5px 8px;
             font-size: 11px;
@@ -157,8 +161,8 @@
 
         /* 4. HERO CALL BANNER */
         .call-banner {
-            background: #0f172a;
-            border: 2px solid #334155;
+            background: #111111;
+            border: 2px solid #2a2a2a;
             border-radius: 10px;
             padding: 5px 8px;
             display: flex;
@@ -172,8 +176,8 @@
         .call-num-badge {
             font-size: 24px;
             font-weight: 900;
-            background: #1e293b;
-            border: 1px solid #334155;
+            background: #1a1a1a;
+            border: 1px solid #333333;
             border-radius: 8px;
             min-width: 48px;
             height: 42px;
@@ -189,8 +193,8 @@
         .call-yards-badge {
             min-width: 82px;
             height: 42px;
-            background: #090e17;
-            border: 1.5px solid #1e293b;
+            background: #0a0a0a;
+            border: 1.5px solid #262626;
             border-radius: 8px;
             display: flex;
             flex-direction: column;
@@ -224,9 +228,9 @@
             height: 34px;
             font-size: 11px;
             font-weight: 800;
-            background: #1a253c;
-            color: #94a3b8;
-            border: 1px solid #2e3e5b;
+            background: #1c1c1c;
+            color: #d4d4d4;
+            border: 1px solid #333333;
             border-radius: 6px;
             cursor: pointer;
         }
@@ -237,16 +241,16 @@
             font-weight: 900;
         }
         .clear-play-btn {
-            background: #2a1215;
-            color: #fca5a5;
-            border: 1px solid #7f1d1d;
+            background: #1f1414;
+            color: #f87171;
+            border: 1px solid #451a1a;
             border-radius: 6px;
             font-size: 10px;
             font-weight: 900;
             height: 34px;
             cursor: pointer;
         }
-        .clear-play-btn:active { background: #450a0a; }
+        .clear-play-btn:active { background: #331111; }
 
         .numpad-grid {
             flex: 1;
@@ -257,7 +261,7 @@
         .num-key {
             background: var(--keypad-key-bg);
             border: 1px solid var(--keypad-border);
-            color: var(--text-main);
+            color: #ffffff;
             font-size: 24px;
             font-weight: 900;
             border-radius: 8px;
@@ -268,27 +272,27 @@
             transition: transform 0.05s ease, background 0.05s ease;
         }
         .num-key:active {
-            background: #334155;
+            background: #2b2b2b;
             transform: scale(0.96);
         }
         .num-key.action-key {
             font-size: 14px;
             font-weight: 800;
-            background: #1e304d;
-            color: #cbd5e1;
-            border-color: #2e446d;
+            background: #242424;
+            color: #ffffff;
+            border-color: #383838;
         }
 
-        /* SPECIAL EVENT PANEL WITH PENALTY PRESETS */
+        /* SPECIAL EVENT PANEL */
         .pill-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 4px;
         }
         .pill-btn {
-            background: #162238;
-            border: 1.5px solid #2b3d60;
-            color: var(--text-main);
+            background: #181818;
+            border: 1.5px solid #2e2e2e;
+            color: #ffffff;
             font-size: 11px;
             font-weight: 800;
             border-radius: 8px;
@@ -301,7 +305,7 @@
             cursor: pointer;
             padding: 2px 4px;
         }
-        .pill-btn:active { background: #23375c; transform: scale(0.97); }
+        .pill-btn:active { background: #262626; transform: scale(0.97); }
         .pill-btn.active {
             background: var(--accent-gold);
             color: #000;
@@ -317,9 +321,9 @@
             padding-top: 4px;
         }
         .pen-preset-btn {
-            background: #231d0b;
-            border: 1.5px solid #ca8a04;
-            color: #fde047;
+            background: #171408;
+            border: 1.5px solid var(--gold-border);
+            color: var(--accent-gold);
             font-size: 12px;
             font-weight: 900;
             border-radius: 6px;
@@ -329,7 +333,7 @@
             justify-content: center;
             cursor: pointer;
         }
-        .pen-preset-btn:active { background: #ca8a04; color: #000; }
+        .pen-preset-btn:active { background: var(--accent-gold); color: #000; }
 
         /* 6. TARGET SELECTION */
         .selector-box {
@@ -347,14 +351,14 @@
             justify-content: space-between;
             font-size: 10px;
             font-weight: 800;
-            color: var(--carrier-text);
+            color: var(--text-muted);
             text-transform: uppercase;
             padding: 0 2px;
         }
         .carrier-pill {
             background: var(--carrier-pill-bg);
             border: 1.5px solid var(--carrier-border);
-            color: #e2e8f0;
+            color: #ffffff;
             font-size: 11px;
             font-weight: 800;
             border-radius: 8px;
@@ -367,18 +371,18 @@
             cursor: pointer;
             padding: 2px 4px;
         }
-        .carrier-pill:active { background: #1e3a8a; transform: scale(0.97); }
+        .carrier-pill:active { background: #262626; transform: scale(0.97); }
         .carrier-pill.active {
-            background: #38bdf8;
-            color: #041b33;
-            border-color: #38bdf8;
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
             font-weight: 900;
         }
 
-        /* 7. PROMINENT LOGS BUTTON */
+        /* 7. STATS & LOGS BAR (BALANCED CONTRAST) */
         .prominent-logs-btn {
-            background: #0284c7;
-            border: 1px solid #38bdf8;
+            background: #171717;
+            border: 1.5px solid var(--accent-gold);
             border-radius: 10px;
             height: 40px;
             display: flex;
@@ -387,21 +391,21 @@
             padding: 0 14px;
             font-size: 13px;
             font-weight: 900;
-            color: #fff;
+            color: var(--accent-gold);
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
             flex-shrink: 0;
         }
-        .prominent-logs-btn:active { background: #0369a1; transform: scale(0.99); }
+        .prominent-logs-btn:active { background: var(--accent-gold); color: #000; }
         .prominent-logs-btn span.badge {
-            background: #082f49;
-            color: #7dd3fc;
+            background: #000000;
+            color: #ffffff;
+            border: 1px solid #333333;
             padding: 2px 8px;
             border-radius: 6px;
             font-size: 11px;
         }
 
-        /* 8. BOTTOM COMMAND BUTTONS WITH COMPACT UNDO / REDO */
+        /* 8. BOTTOM COMMAND BUTTONS */
         .bottom-actions {
             display: grid;
             grid-template-columns: 2.5fr 0.75fr 0.75fr;
@@ -409,8 +413,8 @@
             flex-shrink: 0;
         }
         .big-log-btn {
-            background: var(--cadillac);
-            color: #042f13;
+            background: var(--accent-gold);
+            color: #000000;
             border: none;
             border-radius: 10px;
             height: 48px;
@@ -422,11 +426,11 @@
             letter-spacing: 0.5px;
             cursor: pointer;
         }
-        .big-log-btn:active { background: #16a34a; transform: scale(0.98); }
+        .big-log-btn:active { background: #ca8a04; transform: scale(0.98); }
         .history-btn {
-            background: #1e293b;
-            color: #cbd5e1;
-            border: 1px solid #334155;
+            background: #171717;
+            color: #ffffff;
+            border: 1px solid #333333;
             border-radius: 10px;
             font-size: 13px;
             font-weight: 900;
@@ -438,8 +442,8 @@
             cursor: pointer;
             gap: 1px;
         }
-        .history-btn:active { background: #334155; transform: scale(0.96); }
-        .history-btn.disabled { opacity: 0.35; pointer-events: none; }
+        .history-btn:active { background: #262626; transform: scale(0.96); }
+        .history-btn.disabled { opacity: 0.3; pointer-events: none; }
 
         /* 9. ON-SCREEN YARDLINE KEYPAD MODAL */
         .yard-keypad-modal {
@@ -448,7 +452,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(6, 9, 17, 0.96);
+            background: rgba(5, 5, 5, 0.96);
             backdrop-filter: blur(8px);
             z-index: 200;
             display: none;
@@ -457,7 +461,7 @@
             gap: 10px;
         }
         .yard-display-panel {
-            background: #0f172a;
+            background: #121212;
             border: 2px solid var(--accent-gold);
             border-radius: 12px;
             padding: 12px;
@@ -485,13 +489,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #1f2937;
+            border-bottom: 1px solid #262626;
             padding-bottom: 6px;
         }
         .modal-header h3 { margin: 0; font-size: 15px; color: var(--accent-gold); }
         .close-modal-btn {
-            background: #1e293b;
-            border: 1px solid #334155;
+            background: #171717;
+            border: 1px solid #333333;
             color: #fff;
             padding: 5px 12px;
             border-radius: 8px;
@@ -505,9 +509,9 @@
             padding: 6px 2px;
             font-size: 11px;
             font-weight: 800;
-            background: #1e293b;
+            background: #171717;
             color: var(--text-muted);
-            border: 1px solid #334155;
+            border: 1px solid #2e2e2e;
             border-radius: 6px;
             text-align: center;
             cursor: pointer;
@@ -517,9 +521,9 @@
         .hub-content-view {
             flex: 1;
             overflow-y: auto;
-            border: 1px solid #1f2937;
+            border: 1px solid #262626;
             border-radius: 10px;
-            background: #0f172a;
+            background: #121212;
             padding: 8px;
         }
 
@@ -528,8 +532,8 @@
             flex: 1;
             padding: 6px;
             border-radius: 6px;
-            background: #1e293b;
-            border: 1px solid #334155;
+            background: #171717;
+            border: 1px solid #333333;
             color: var(--text-muted);
             font-size: 11px;
             font-weight: 800;
@@ -537,15 +541,15 @@
             cursor: pointer;
         }
         .filter-chip-btn.active {
-            background: #0284c7;
-            color: #fff;
-            border-color: #38bdf8;
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
         }
 
         .analytics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
         .card-stat {
-            background: #131b2e;
-            border: 1px solid #233148;
+            background: #171717;
+            border: 1px solid #2b2b2b;
             border-radius: 8px;
             padding: 7px;
             display: flex;
@@ -556,9 +560,9 @@
         .card-stat-number { font-size: 16px; font-weight: 900; color: #fff; }
 
         .mirror-table { width: 100%; border-collapse: collapse; font-size: 11px; text-align: left; }
-        .mirror-table th, .mirror-table td { padding: 6px 4px; border-bottom: 1px solid #1f2937; }
+        .mirror-table th, .mirror-table td { padding: 6px 4px; border-bottom: 1px solid #262626; }
         .mirror-table th {
-            background: #131b2e;
+            background: #1a1a1a;
             color: var(--text-muted);
             font-size: 10px;
             text-transform: uppercase;
@@ -572,8 +576,8 @@
             margin-top: 4px;
         }
         .export-btn {
-            background: #0284c7;
-            color: #fff;
+            background: #ffffff;
+            color: #000000;
             border: none;
             border-radius: 8px;
             height: 42px;
@@ -582,9 +586,9 @@
             cursor: pointer;
         }
         .danger-reset-btn {
-            background: #450a0a;
-            color: #fca5a5;
-            border: 1px solid var(--danger);
+            background: #1f1414;
+            color: #f87171;
+            border: 1px solid #451a1a;
             border-radius: 8px;
             font-size: 11px;
             font-weight: 900;
@@ -657,7 +661,7 @@
         <div class="drive-btn-group">
             <button type="button" class="drive-action-btn fast-btn" onclick="quickStampClock('start')">In</button>
             <button type="button" class="drive-action-btn fast-btn" onclick="quickStampClock('end')">Out</button>
-            <button type="button" class="drive-action-btn fast-btn" style="background:#2d240d; border-color:var(--accent-gold); color:var(--accent-gold);" onclick="openYardKeypadModal('new_drive')">+ New</button>
+            <button type="button" class="drive-action-btn fast-btn" style="background:var(--gold-subtle); border-color:var(--accent-gold); color:var(--accent-gold);" onclick="openYardKeypadModal('new_drive')">+ New</button>
         </div>
     </div>
 
@@ -699,7 +703,7 @@
             <button type="button" class="num-key action-key fast-btn" onclick="numpadClear()">CLR</button>
         </div>
 
-        <!-- SPECIAL EVENT MODIFIER PANEL WITH INTELLIGENT PENALTY BUTTONS -->
+        <!-- SPECIAL EVENT MODIFIER PANEL -->
         <div id="specialGrid" style="display: none; height: 100%; flex-direction: column; gap: 4px;">
             <div class="pill-grid" style="flex: 1;">
                 <button type="button" class="pill-btn fast-btn active" onclick="selectSpecial('Normal', this)">Clean</button>
@@ -734,7 +738,7 @@
         <span class="badge" id="playCountBadge">0 Plays</span>
     </div>
 
-    <!-- 8. BOTTOM COMMAND BUTTONS WITH COMPACT UNDO & REDO -->
+    <!-- 8. BOTTOM COMMAND BUTTONS -->
     <div class="bottom-actions">
         <button type="button" class="big-log-btn fast-btn" onclick="logPlay()">LOG PLAY</button>
         <button type="button" class="history-btn fast-btn" id="btnUndoHistory" onclick="undoLastPlay()">
@@ -768,7 +772,7 @@
             <button type="button" class="num-key fast-btn" onclick="yardKeypadInput('7')">7</button>
             <button type="button" class="num-key fast-btn" onclick="yardKeypadInput('8')">8</button>
             <button type="button" class="num-key fast-btn" onclick="yardKeypadInput('9')">9</button>
-            <button type="button" class="num-key action-key fast-btn" style="background:#2d240d; border-color:var(--accent-gold); color:var(--accent-gold);" onclick="yardKeypadToggleSide()">+/- Side</button>
+            <button type="button" class="num-key action-key fast-btn" style="background:var(--gold-subtle); border-color:var(--accent-gold); color:var(--accent-gold);" onclick="yardKeypadToggleSide()">+/- Side</button>
             <button type="button" class="num-key fast-btn" onclick="yardKeypadInput('0')">0</button>
             <button type="button" class="num-key action-key fast-btn" onclick="yardKeypadClear()">CLR</button>
         </div>
@@ -816,11 +820,11 @@
                 </div>
                 <div class="card-stat">
                     <span class="card-stat-title">Successful (4+ Yds)</span>
-                    <span class="card-stat-number" style="color:#4ade80;"><span id="overviewSuccPlays">0</span> (<span id="overviewSuccRate">0%</span>)</span>
+                    <span class="card-stat-number" style="color:#ffffff;"><span id="overviewSuccPlays">0</span> (<span id="overviewSuccRate">0%</span>)</span>
                 </div>
                 <div class="card-stat">
                     <span class="card-stat-title">Unsuccessful (< 4 Yds)</span>
-                    <span class="card-stat-number" style="color:#facc15;"><span id="overviewUnsuccPlays">0</span> (<span id="overviewUnsuccRate">0%</span>)</span>
+                    <span class="card-stat-number" style="color:var(--text-muted);"><span id="overviewUnsuccPlays">0</span> (<span id="overviewUnsuccRate">0%</span>)</span>
                 </div>
                 <div class="card-stat" style="grid-column: span 2;">
                     <span class="card-stat-title">Negative / Stuffed Plays (&le; 0 Yds)</span>
@@ -872,7 +876,7 @@
 
         <div class="modal-footer">
             <button type="button" class="export-btn fast-btn" onclick="exportToCSV()">📥 Export CSV</button>
-            <button type="button" class="undo-btn fast-btn" style="background:#1e293b; border-color:#334155; height:42px; font-size:12px;" onclick="undoLastPlay()">↩ Undo</button>
+            <button type="button" class="undo-btn fast-btn" style="background:#1a1a1a; border-color:#333333; height:42px; font-size:12px;" onclick="undoLastPlay()">↩ Undo</button>
             <button type="button" class="danger-reset-btn fast-btn" onclick="promptClearEntireGame()">🗑️ Reset Game</button>
         </div>
     </div>
@@ -1121,7 +1125,7 @@
             badge.style.color = "#f87171";
         } else {
             badge.innerText = `OWN TERRITORY (-${val})`;
-            badge.style.color = "#4ade80";
+            badge.style.color = "#ffffff";
         }
     }
 
@@ -1163,7 +1167,7 @@
         closeYardKeypadModal();
     }
 
-    const STORAGE_KEY = "10U_GOLD_SIDELINE_STATE_V6";
+    const STORAGE_KEY = "10U_GOLD_SIDELINE_STATE_V7";
 
     function saveStateToLocalStorage() {
         const fullBundle = {
@@ -1341,9 +1345,9 @@
             tr.innerHTML = `
                 <td><b>${name}</b></td>
                 <td style="font-weight:900;">${s.touches}</td>
-                <td style="font-weight:900; color:${s.yards >= 0 ? '#4ade80' : '#f87171'};">${s.yards >= 0 ? '+' : ''}${s.yards}</td>
-                <td style="color:#4ade80; font-weight:800;">${s.succ}</td>
-                <td style="color:#facc15;">${s.unsucc}</td>
+                <td style="font-weight:900; color:${s.yards >= 0 ? '#ffffff' : '#f87171'};">${s.yards >= 0 ? '+' : ''}${s.yards}</td>
+                <td style="color:#ffffff; font-weight:800;">${s.succ}</td>
+                <td style="color:var(--text-muted);">${s.unsucc}</td>
                 <td style="color:var(--danger); font-weight:800;">${s.neg}</td>
             `;
             tbody.appendChild(tr);
@@ -1625,7 +1629,6 @@
         }
     }
 
-    /* RULEBOOK PENALTY & PLAY ADVANCEMENT LOGIC */
     function logPlay() {
         let isPenalty = activeSpecial.startsWith("Penalty");
         if (!activeCall && !isPenalty) {
@@ -1649,21 +1652,17 @@
         } else if (activeSpecial === "Turnover") {
             nextSit = "Turnover";
         } else if (isPenalty) {
-            // Replay the down, adjust yardline and distance intuitively
             gameState.ballOn = Math.max(1, Math.min(99, gameState.ballOn + gain));
             let toGoalNow = 100 - gameState.ballOn;
             let curDn = ["1st", "2nd", "3rd", "4th"][gameState.down - 1];
             
             if (activeSpecial === "Penalty Offense") {
-                // e.g., 2nd & 7 with -10yd pen -> 2nd & 17
                 let penaltyMagnitude = Math.abs(gain) || 5;
                 gameState.distance = Math.min(toGoalNow, gameState.distance + penaltyMagnitude);
                 nextSit = gameState.distance >= toGoalNow ? `${curDn} & Goal` : `${curDn} & ${gameState.distance}`;
             } else {
-                // Penalty Defense (+5, +10)
                 let penYards = Math.abs(gain) || 5;
                 if (penYards >= gameState.distance) {
-                    // Automatic or yardage First Down
                     gameState.down = 1;
                     gameState.distance = Math.min(10, toGoalNow);
                     nextSit = "1st & " + (gameState.distance >= toGoalNow ? "Goal" : gameState.distance);
@@ -1740,8 +1739,8 @@
                 <td>${p.situation}</td>
                 <td style="color:var(--accent-gold); font-weight:900;">#${p.callNum}</td>
                 <td>${p.carrier}</td>
-                <td style="font-weight:900; color:${p.yards >= 0 ? '#4ade80' : '#f87171'};">${p.yards >= 0 ? '+' : ''}${p.yards}</td>
-                <td style="color:#38bdf8;">${p.nextSituation}</td>
+                <td style="font-weight:900; color:${p.yards >= 0 ? '#ffffff' : '#f87171'};">${p.yards >= 0 ? '+' : ''}${p.yards}</td>
+                <td style="color:var(--accent-gold);">${p.nextSituation}</td>
             `;
             tbody.appendChild(tr);
         });
