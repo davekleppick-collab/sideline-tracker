@@ -9,9 +9,20 @@
     <style>
         :root {
             --bg-main: #060911;
-            --surface: #0f172a;
-            --surface-elevated: #1e293b;
-            --border: #334155;
+            
+            /* Subtle Section-Specific Surfaces */
+            --hud-surface: #0f172a;
+            --hud-border: #1e293b;
+            
+            --keypad-surface: #131b2e;
+            --keypad-key-bg: #1e293b;
+            --keypad-border: #334155;
+            
+            --carrier-surface: #0a192f;
+            --carrier-pill-bg: #112240;
+            --carrier-border: #1e3a8a;
+            --carrier-text: #93c5fd;
+
             --accent-gold: #facc15;
             --cadillac: #22c55e;
             --boeing: #38bdf8;
@@ -54,8 +65,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #1e293b;
-            border: 1px solid var(--border);
+            background: #111827;
+            border: 1px solid #1f2937;
             border-radius: 8px;
             padding: 4px 10px;
             font-size: 11px;
@@ -71,8 +82,8 @@
             display: grid;
             grid-template-columns: 0.8fr 1.4fr 1.1fr 0.9fr;
             gap: 6px;
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: var(--hud-surface);
+            border: 1px solid var(--hud-border);
             padding: 5px 8px;
             border-radius: 10px;
             text-align: center;
@@ -84,8 +95,8 @@
 
         /* 2. LIVE TEAM TOTALS & CURRENT DRIVE STATS */
         .live-stats-box {
-            background: #111827;
-            border: 1.5px solid var(--border);
+            background: #090e17;
+            border: 1.5px solid #1e293b;
             border-radius: 10px;
             padding: 4px 6px;
             display: grid;
@@ -107,8 +118,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: var(--hud-surface);
+            border: 1px solid var(--hud-border);
             border-radius: 10px;
             padding: 4px 8px;
             font-size: 11px;
@@ -135,9 +146,9 @@
         .drive-time-txt b { color: #fff; cursor: pointer; text-decoration: underline dotted var(--accent-gold); }
         .drive-btn-group { display: flex; gap: 4px; }
         .drive-action-btn {
-            background: var(--surface-elevated);
+            background: #1e293b;
             color: var(--text-main);
-            border: 1px solid var(--border);
+            border: 1px solid var(--hud-border);
             border-radius: 6px;
             padding: 5px 8px;
             font-size: 11px;
@@ -145,10 +156,10 @@
         }
         .drive-action-btn:active { background: var(--accent-gold); color: #000; }
 
-        /* 4. HERO CALL BANNER (WITH INTEGRATED PROMINENT YARDS BADGE) */
+        /* 4. HERO CALL BANNER */
         .call-banner {
-            background: var(--surface);
-            border: 2px solid var(--border);
+            background: #0f172a;
+            border: 2px solid #334155;
             border-radius: 10px;
             padding: 5px 8px;
             display: flex;
@@ -162,8 +173,8 @@
         .call-num-badge {
             font-size: 24px;
             font-weight: 900;
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
+            background: #1e293b;
+            border: 1px solid #334155;
             border-radius: 8px;
             min-width: 48px;
             height: 42px;
@@ -176,12 +187,11 @@
         .call-meta .play-title { font-size: 14px; font-weight: 900; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .call-meta .play-sub { font-size: 10px; color: var(--text-muted); margin-top: 2px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
-        /* Prominent Right-Aligned Yards Display Badge */
         .call-yards-badge {
             min-width: 82px;
             height: 42px;
-            background: #111827;
-            border: 1.5px solid var(--border);
+            background: #090e17;
+            border: 1.5px solid #1e293b;
             border-radius: 8px;
             display: flex;
             flex-direction: column;
@@ -198,8 +208,8 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: var(--keypad-surface);
+            border: 1px solid var(--keypad-border);
             border-radius: 12px;
             padding: 5px;
             gap: 4px;
@@ -215,9 +225,9 @@
             height: 34px;
             font-size: 11px;
             font-weight: 800;
-            background: var(--surface-elevated);
-            color: var(--text-muted);
-            border: 1px solid var(--border);
+            background: #1a253c;
+            color: #94a3b8;
+            border: 1px solid #2e3e5b;
             border-radius: 6px;
             cursor: pointer;
         }
@@ -246,8 +256,8 @@
             gap: 5px;
         }
         .num-key {
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
+            background: var(--keypad-key-bg);
+            border: 1px solid var(--keypad-border);
             color: var(--text-main);
             font-size: 24px;
             font-weight: 900;
@@ -265,8 +275,9 @@
         .num-key.action-key {
             font-size: 14px;
             font-weight: 800;
-            background: #233148;
+            background: #1e304d;
             color: #cbd5e1;
+            border-color: #2e446d;
         }
 
         /* SPECIAL EVENT PANEL */
@@ -276,8 +287,8 @@
             gap: 4px;
         }
         .pill-btn {
-            background: var(--surface);
-            border: 1.5px solid var(--border);
+            background: #162238;
+            border: 1.5px solid #2b3d60;
             color: var(--text-main);
             font-size: 11px;
             font-weight: 800;
@@ -291,7 +302,7 @@
             cursor: pointer;
             padding: 2px 4px;
         }
-        .pill-btn:active { background: #334155; transform: scale(0.97); }
+        .pill-btn:active { background: #23375c; transform: scale(0.97); }
         .pill-btn.active {
             background: var(--accent-gold);
             color: #000;
@@ -299,27 +310,54 @@
             font-weight: 900;
         }
 
-        /* 6. TARGET SELECTION */
+        /* 6. TARGET SELECTION (SUBTLY DISTINCT DEEP COBALT PALETTE) */
         .selector-box {
             display: flex;
             flex-direction: column;
             gap: 3px;
             flex-shrink: 0;
+            background: var(--carrier-surface);
+            border: 1px solid var(--carrier-border);
+            border-radius: 10px;
+            padding: 4px 6px;
         }
         .selector-header {
             display: flex;
             justify-content: space-between;
             font-size: 10px;
             font-weight: 800;
-            color: var(--text-muted);
+            color: var(--carrier-text);
             text-transform: uppercase;
-            padding: 0 4px;
+            padding: 0 2px;
+        }
+        .carrier-pill {
+            background: var(--carrier-pill-bg);
+            border: 1.5px solid var(--carrier-border);
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 800;
+            border-radius: 8px;
+            text-align: center;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.1;
+            cursor: pointer;
+            padding: 2px 4px;
+        }
+        .carrier-pill:active { background: #1e3a8a; transform: scale(0.97); }
+        .carrier-pill.active {
+            background: #38bdf8;
+            color: #041b33;
+            border-color: #38bdf8;
+            font-weight: 900;
         }
 
         /* 7. LOG DRAWER PREVIEW BAR */
         .drawer-bar {
-            background: #1e293b;
-            border: 1px solid var(--border);
+            background: #111827;
+            border: 1px solid #1f2937;
             border-radius: 8px;
             padding: 5px 8px;
             display: flex;
@@ -354,9 +392,9 @@
         }
         .big-log-btn:active { background: #16a34a; transform: scale(0.98); }
         .undo-btn {
-            background: var(--surface-elevated);
+            background: #1e293b;
             color: #cbd5e1;
-            border: 1px solid var(--border);
+            border: 1px solid #334155;
             border-radius: 10px;
             font-size: 14px;
             font-weight: 800;
@@ -381,7 +419,7 @@
             gap: 10px;
         }
         .yard-display-panel {
-            background: var(--surface);
+            background: #0f172a;
             border: 2px solid var(--accent-gold);
             border-radius: 12px;
             padding: 12px;
@@ -409,13 +447,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid #1f2937;
             padding-bottom: 6px;
         }
         .modal-header h3 { margin: 0; font-size: 15px; color: var(--accent-gold); }
         .close-modal-btn {
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
+            background: #1e293b;
+            border: 1px solid #334155;
             color: #fff;
             padding: 5px 12px;
             border-radius: 8px;
@@ -429,9 +467,9 @@
             padding: 6px 2px;
             font-size: 11px;
             font-weight: 800;
-            background: var(--surface-elevated);
+            background: #1e293b;
             color: var(--text-muted);
-            border: 1px solid var(--border);
+            border: 1px solid #334155;
             border-radius: 6px;
             text-align: center;
             cursor: pointer;
@@ -441,9 +479,9 @@
         .hub-content-view {
             flex: 1;
             overflow-y: auto;
-            border: 1px solid var(--border);
+            border: 1px solid #1f2937;
             border-radius: 10px;
-            background: var(--surface);
+            background: #0f172a;
             padding: 8px;
         }
 
@@ -452,8 +490,8 @@
             flex: 1;
             padding: 6px;
             border-radius: 6px;
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
+            background: #1e293b;
+            border: 1px solid #334155;
             color: var(--text-muted);
             font-size: 11px;
             font-weight: 800;
@@ -468,8 +506,8 @@
 
         .analytics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
         .card-stat {
-            background: #1e293b;
-            border: 1px solid var(--border);
+            background: #131b2e;
+            border: 1px solid #233148;
             border-radius: 8px;
             padding: 7px;
             display: flex;
@@ -480,9 +518,9 @@
         .card-stat-number { font-size: 16px; font-weight: 900; color: #fff; }
 
         .mirror-table { width: 100%; border-collapse: collapse; font-size: 11px; text-align: left; }
-        .mirror-table th, .mirror-table td { padding: 6px 4px; border-bottom: 1px solid var(--border); }
+        .mirror-table th, .mirror-table td { padding: 6px 4px; border-bottom: 1px solid #1f2937; }
         .mirror-table th {
-            background: #1e293b;
+            background: #131b2e;
             color: var(--text-muted);
             font-size: 10px;
             text-transform: uppercase;
@@ -585,7 +623,7 @@
         </div>
     </div>
 
-    <!-- 4. HERO CALL BANNER (WITH INTEGRATED YARDS DISPLAY BADGE) -->
+    <!-- 4. HERO CALL BANNER -->
     <div class="call-banner" id="callBannerDisplay">
         <div class="call-num-badge" id="bannerCallNum">--</div>
         <div class="call-meta">
@@ -782,7 +820,7 @@
 
         <div class="modal-footer">
             <button type="button" class="export-btn fast-btn" onclick="exportToCSV()">📥 Export CSV</button>
-            <button type="button" class="undo-btn fast-btn" style="background:#334155; height:42px; font-size:12px;" onclick="undoLastPlay()">↩ Undo</button>
+            <button type="button" class="undo-btn fast-btn" style="background:#1e293b; border-color:#334155; height:42px; font-size:12px;" onclick="undoLastPlay()">↩ Undo</button>
             <button type="button" class="danger-reset-btn fast-btn" onclick="promptClearEntireGame()">🗑️ Reset Game</button>
         </div>
     </div>
@@ -895,7 +933,6 @@
         86: { name: "SPREAD - Z motion over Flood Left", type: "Boeing", form: "Wing Right" }
     };
 
-    // Updated Player Roster with Jersey Numbers Included
     const runPlayers = [
         "#20 Truesdell",
         "#3 Kleppick",
@@ -943,7 +980,6 @@
         history: []
     };
 
-    // --- RESET CURRENT PLAY FUNCTION ---
     function resetCurrentPlay() {
         inputCallBuffer = "";
         inputYardsBuffer = "0";
@@ -956,7 +992,6 @@
         setNumpadMode('call');
     }
 
-    // --- ON-SCREEN YARDLINE KEYPAD ENGINE ---
     let yardKeypadState = {
         mode: 'edit',
         buffer: "",
@@ -1064,8 +1099,7 @@
         closeYardKeypadModal();
     }
 
-    // --- LOCALSTORAGE PERSISTENCE ENGINE ---
-    const STORAGE_KEY = "10U_GOLD_SIDELINE_STATE_V4";
+    const STORAGE_KEY = "10U_GOLD_SIDELINE_STATE_V5";
 
     function saveStateToLocalStorage() {
         const fullBundle = {
@@ -1319,11 +1353,13 @@
         }
     }
 
+    /* PUNCH NUMBER WITHOUT AUTO-SWITCHING TABS */
     function numpadPress(char) {
         if (numpadMode === 'call') {
             if (inputCallBuffer.length >= 2) inputCallBuffer = "";
             inputCallBuffer += char;
             resolveCallNumber(parseInt(inputCallBuffer, 10));
+            // Stays on 'call' mode deliberately
         } else if (numpadMode === 'yards') {
             let isNeg = inputYardsBuffer.startsWith("-");
             let clean = inputYardsBuffer.replace("-", "");
@@ -1363,10 +1399,8 @@
         let prefix = gainVal > 0 ? "+" : "";
         let displayStr = `${prefix}${gainVal} Yds`;
 
-        // Update active gain text
         document.getElementById('currentYardsLabel').innerText = `Active Gain: ${displayStr}`;
         
-        // Update prominent right-aligned badge in hero banner
         const badgeVal = document.getElementById('bannerYardsVal');
         badgeVal.innerText = displayStr;
         if (gainVal > 0) badgeVal.style.color = "var(--cadillac)";
@@ -1390,7 +1424,6 @@
             banner.classList.add(activeCall.type === 'Cadillac' ? 'cadillac-active' : 'boeing-active');
             
             renderPlayerPills(activeCall.type === 'Boeing');
-            setNumpadMode('yards');
         } else {
             activeCall = null;
             bannerNum.innerText = num ? num : "--";
@@ -1413,10 +1446,10 @@
         list.forEach(item => {
             const btn = document.createElement('button');
             btn.type = "button";
-            btn.className = "pill-btn fast-btn";
+            btn.className = "carrier-pill fast-btn";
             btn.innerText = item;
             bindInstantTouch(btn, () => {
-                document.querySelectorAll('#playerPillGrid .pill-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('#playerPillGrid .carrier-pill').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 selectedPlayer = item;
             });
@@ -1658,7 +1691,6 @@
         document.getElementById('logModal').style.display = 'none';
     }
 
-    // --- INITIALIZATION ---
     const restored = loadStateFromLocalStorage();
     if (!restored) {
         gameState.driveHistory[1] = { start: "Q1 10:00", end: "--:--" };
