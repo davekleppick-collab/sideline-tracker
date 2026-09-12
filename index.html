@@ -10,7 +10,6 @@
         :root {
             --bg-main: #060911;
             
-            /* Subtle Section-Specific Surfaces */
             --hud-surface: #0f172a;
             --hud-border: #1e293b;
             
@@ -280,7 +279,7 @@
             border-color: #2e446d;
         }
 
-        /* SPECIAL EVENT PANEL */
+        /* SPECIAL EVENT PANEL WITH PENALTY PRESETS */
         .pill-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -294,7 +293,7 @@
             font-weight: 800;
             border-radius: 8px;
             text-align: center;
-            height: 38px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -309,8 +308,30 @@
             border-color: var(--accent-gold);
             font-weight: 900;
         }
+        .penalty-quick-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+            margin-top: 4px;
+            border-top: 1px solid var(--keypad-border);
+            padding-top: 4px;
+        }
+        .pen-preset-btn {
+            background: #231d0b;
+            border: 1.5px solid #ca8a04;
+            color: #fde047;
+            font-size: 12px;
+            font-weight: 900;
+            border-radius: 6px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .pen-preset-btn:active { background: #ca8a04; color: #000; }
 
-        /* 6. TARGET SELECTION (SUBTLY DISTINCT DEEP COBALT PALETTE) */
+        /* 6. TARGET SELECTION */
         .selector-box {
             display: flex;
             flex-direction: column;
@@ -354,26 +375,37 @@
             font-weight: 900;
         }
 
-        /* 7. LOG DRAWER PREVIEW BAR */
-        .drawer-bar {
-            background: #111827;
-            border: 1px solid #1f2937;
-            border-radius: 8px;
-            padding: 5px 8px;
+        /* 7. PROMINENT LOGS BUTTON */
+        .prominent-logs-btn {
+            background: #0284c7;
+            border: 1px solid #38bdf8;
+            border-radius: 10px;
+            height: 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 11px;
+            padding: 0 14px;
+            font-size: 13px;
+            font-weight: 900;
+            color: #fff;
             cursor: pointer;
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
             flex-shrink: 0;
         }
-        .drawer-bar span { color: var(--accent-gold); font-weight: 800; }
+        .prominent-logs-btn:active { background: #0369a1; transform: scale(0.99); }
+        .prominent-logs-btn span.badge {
+            background: #082f49;
+            color: #7dd3fc;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+        }
 
-        /* 8. BOTTOM COMMAND BUTTONS */
+        /* 8. BOTTOM COMMAND BUTTONS WITH COMPACT UNDO / REDO */
         .bottom-actions {
             display: grid;
-            grid-template-columns: 3fr 1fr;
-            gap: 6px;
+            grid-template-columns: 2.5fr 0.75fr 0.75fr;
+            gap: 5px;
             flex-shrink: 0;
         }
         .big-log-btn {
@@ -382,7 +414,7 @@
             border: none;
             border-radius: 10px;
             height: 48px;
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 900;
             display: flex;
             align-items: center;
@@ -391,17 +423,23 @@
             cursor: pointer;
         }
         .big-log-btn:active { background: #16a34a; transform: scale(0.98); }
-        .undo-btn {
+        .history-btn {
             background: #1e293b;
             color: #cbd5e1;
             border: 1px solid #334155;
             border-radius: 10px;
-            font-size: 14px;
-            font-weight: 800;
+            font-size: 13px;
+            font-weight: 900;
             height: 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
+            gap: 1px;
         }
-        .undo-btn:active { background: #334155; transform: scale(0.98); }
+        .history-btn:active { background: #334155; transform: scale(0.96); }
+        .history-btn.disabled { opacity: 0.35; pointer-events: none; }
 
         /* 9. ON-SCREEN YARDLINE KEYPAD MODAL */
         .yard-keypad-modal {
@@ -661,14 +699,23 @@
             <button type="button" class="num-key action-key fast-btn" onclick="numpadClear()">CLR</button>
         </div>
 
-        <!-- SPECIAL EVENT MODIFIER PANEL -->
-        <div class="pill-grid" id="specialGrid" style="display: none; height: 100%;">
-            <button type="button" class="pill-btn fast-btn active" onclick="selectSpecial('Normal', this)">Clean</button>
-            <button type="button" class="pill-btn fast-btn" onclick="selectSpecial('Touchdown', this)">🎉 TD</button>
-            <button type="button" class="pill-btn fast-btn" onclick="selectSpecial('Turnover', this)">⚠️ TO</button>
-            <button type="button" class="pill-btn fast-btn" onclick="selectSpecial('Penalty Offense', this)">Off Pen</button>
-            <button type="button" class="pill-btn fast-btn" onclick="selectSpecial('Penalty Defense', this)">Def Pen</button>
-            <button type="button" class="pill-btn fast-btn" onclick="selectSpecial('Incomplete', this)">Inc Pass</button>
+        <!-- SPECIAL EVENT MODIFIER PANEL WITH INTELLIGENT PENALTY BUTTONS -->
+        <div id="specialGrid" style="display: none; height: 100%; flex-direction: column; gap: 4px;">
+            <div class="pill-grid" style="flex: 1;">
+                <button type="button" class="pill-btn fast-btn active" onclick="selectSpecial('Normal', this)">Clean</button>
+                <button type="button" class="pill-btn fast-btn" onclick="selectSpecial('Touchdown', this)">🎉 TD</button>
+                <button type="button" class="pill-btn fast-btn" onclick="selectSpecial('Turnover', this)">⚠️ TO</button>
+                <button type="button" class="pill-btn fast-btn" onclick="selectSpecial('Penalty Offense', this)">Off Pen</button>
+                <button type="button" class="pill-btn fast-btn" onclick="selectSpecial('Penalty Defense', this)">Def Pen</button>
+                <button type="button" class="pill-btn fast-btn" onclick="selectSpecial('Incomplete', this)">Inc Pass</button>
+            </div>
+            <!-- Quick Penalty Yardage Buttons -->
+            <div class="penalty-quick-row">
+                <button type="button" class="pen-preset-btn fast-btn" onclick="setPenaltyPreset(-5)">Off -5</button>
+                <button type="button" class="pen-preset-btn fast-btn" onclick="setPenaltyPreset(-10)">Off -10</button>
+                <button type="button" class="pen-preset-btn fast-btn" onclick="setPenaltyPreset(5)">Def +5</button>
+                <button type="button" class="pen-preset-btn fast-btn" onclick="setPenaltyPreset(10)">Def +10</button>
+            </div>
         </div>
     </div>
 
@@ -681,16 +728,21 @@
         <div class="pill-grid" id="playerPillGrid"></div>
     </div>
 
-    <!-- 7. LOG DRAWER PREVIEW BAR -->
-    <div class="drawer-bar fast-btn" onclick="openLogModal()">
-        <span>📊 Stats & Log (<span id="playCountBadge">0</span> Plays)</span>
-        <div id="recentPlayPreview" style="color:#cbd5e1;">Tap to view stats</div>
+    <!-- 7. PROMINENT STATS & LOGS BUTTON -->
+    <div class="prominent-logs-btn fast-btn" onclick="openLogModal()">
+        <span>📊 STATS & GAME LOG</span>
+        <span class="badge" id="playCountBadge">0 Plays</span>
     </div>
 
-    <!-- 8. BOTTOM COMMAND BUTTONS -->
+    <!-- 8. BOTTOM COMMAND BUTTONS WITH COMPACT UNDO & REDO -->
     <div class="bottom-actions">
         <button type="button" class="big-log-btn fast-btn" onclick="logPlay()">LOG PLAY</button>
-        <button type="button" class="undo-btn fast-btn" onclick="undoLastPlay()">UNDO</button>
+        <button type="button" class="history-btn fast-btn" id="btnUndoHistory" onclick="undoLastPlay()">
+            <span>↩ Undo</span>
+        </button>
+        <button type="button" class="history-btn fast-btn disabled" id="btnRedoHistory" onclick="redoNextPlay()">
+            <span>↪ Redo</span>
+        </button>
     </div>
 
     <!-- 9. ON-SCREEN YARDLINE KEYPAD MODAL -->
@@ -977,7 +1029,8 @@
         startTime: "10:00",
         endTime: "--:--",
         driveHistory: {},
-        history: []
+        history: [],
+        futureHistory: []
     };
 
     function resetCurrentPlay() {
@@ -990,6 +1043,17 @@
         updateYardsDisplay();
         selectSpecial('Normal', document.querySelector('#specialGrid .pill-btn'));
         setNumpadMode('call');
+    }
+
+    function setPenaltyPreset(yds) {
+        if (yds < 0) {
+            selectSpecial('Penalty Offense', document.querySelectorAll('#specialGrid .pill-btn')[3]);
+            inputYardsBuffer = yds.toString();
+        } else {
+            selectSpecial('Penalty Defense', document.querySelectorAll('#specialGrid .pill-btn')[4]);
+            inputYardsBuffer = yds.toString();
+        }
+        updateYardsDisplay();
     }
 
     let yardKeypadState = {
@@ -1099,7 +1163,7 @@
         closeYardKeypadModal();
     }
 
-    const STORAGE_KEY = "10U_GOLD_SIDELINE_STATE_V5";
+    const STORAGE_KEY = "10U_GOLD_SIDELINE_STATE_V6";
 
     function saveStateToLocalStorage() {
         const fullBundle = {
@@ -1244,6 +1308,7 @@
         document.getElementById('overviewNegRate').innerText = `${negRate}%`;
 
         renderPlayerStatsTable();
+        updateHistoryButtons();
     }
 
     function renderPlayerStatsTable() {
@@ -1346,20 +1411,18 @@
         const special = document.getElementById('specialGrid');
         if (mode === 'special') {
             numpad.style.display = 'none';
-            special.style.display = 'grid';
+            special.style.display = 'flex';
         } else {
             numpad.style.display = 'grid';
             special.style.display = 'none';
         }
     }
 
-    /* PUNCH NUMBER WITHOUT AUTO-SWITCHING TABS */
     function numpadPress(char) {
         if (numpadMode === 'call') {
             if (inputCallBuffer.length >= 2) inputCallBuffer = "";
             inputCallBuffer += char;
             resolveCallNumber(parseInt(inputCallBuffer, 10));
-            // Stays on 'call' mode deliberately
         } else if (numpadMode === 'yards') {
             let isNeg = inputYardsBuffer.startsWith("-");
             let clean = inputYardsBuffer.replace("-", "");
@@ -1460,7 +1523,7 @@
     function selectSpecial(val, btn) {
         activeSpecial = val;
         document.querySelectorAll('#specialGrid .pill-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        if (btn) btn.classList.add('active');
     }
 
     function updateHUD() {
@@ -1486,13 +1549,27 @@
             driveHistory: JSON.parse(JSON.stringify(gameState.driveHistory)),
             loggedPlays: JSON.parse(JSON.stringify(loggedPlays))
         }));
+        gameState.futureHistory = [];
+        updateHistoryButtons();
     }
 
     function undoLastPlay() {
         if (gameState.history.length === 0 && loggedPlays.length === 0) {
-            alert("No plays logged yet!");
+            alert("No plays to undo!");
             return;
         }
+
+        gameState.futureHistory.push(JSON.stringify({
+            driveNum: gameState.driveNum,
+            down: gameState.down,
+            distance: gameState.distance,
+            ballOn: gameState.ballOn,
+            startTime: gameState.startTime,
+            endTime: gameState.endTime,
+            driveHistory: JSON.parse(JSON.stringify(gameState.driveHistory)),
+            loggedPlays: JSON.parse(JSON.stringify(loggedPlays))
+        }));
+
         if (gameState.history.length > 0) {
             let prevState = JSON.parse(gameState.history.pop());
             loggedPlays = prevState.loggedPlays || [];
@@ -1510,9 +1587,49 @@
         saveStateToLocalStorage();
     }
 
+    function redoNextPlay() {
+        if (!gameState.futureHistory || gameState.futureHistory.length === 0) return;
+
+        gameState.history.push(JSON.stringify({
+            driveNum: gameState.driveNum,
+            down: gameState.down,
+            distance: gameState.distance,
+            ballOn: gameState.ballOn,
+            startTime: gameState.startTime,
+            endTime: gameState.endTime,
+            driveHistory: JSON.parse(JSON.stringify(gameState.driveHistory)),
+            loggedPlays: JSON.parse(JSON.stringify(loggedPlays))
+        }));
+
+        let nextState = JSON.parse(gameState.futureHistory.pop());
+        loggedPlays = nextState.loggedPlays || [];
+        delete nextState.loggedPlays;
+        gameState = Object.assign(gameState, nextState);
+
+        updateHUD();
+        document.getElementById('displayStartTime').innerText = gameState.startTime;
+        document.getElementById('displayEndTime').innerText = gameState.endTime;
+        renderMirrorTable();
+        updateLiveStatsBar();
+        saveStateToLocalStorage();
+    }
+
+    function updateHistoryButtons() {
+        const undoBtn = document.getElementById('btnUndoHistory');
+        const redoBtn = document.getElementById('btnRedoHistory');
+        if (undoBtn) {
+            undoBtn.classList.toggle('disabled', gameState.history.length === 0 && loggedPlays.length === 0);
+        }
+        if (redoBtn) {
+            redoBtn.classList.toggle('disabled', !gameState.futureHistory || gameState.futureHistory.length === 0);
+        }
+    }
+
+    /* RULEBOOK PENALTY & PLAY ADVANCEMENT LOGIC */
     function logPlay() {
-        if (!activeCall) {
-            alert("Enter a valid Call # first Coach!");
+        let isPenalty = activeSpecial.startsWith("Penalty");
+        if (!activeCall && !isPenalty) {
+            alert("Enter a Call # or select Penalty!");
             return;
         }
 
@@ -1521,7 +1638,7 @@
         let dnStr = ["1st", "2nd", "3rd", "4th"][gameState.down - 1];
         let initialSit = gameState.distance >= toGoalBefore ? `${dnStr} & Goal` : `${dnStr} & ${gameState.distance}`;
         let initialBallOn = gameState.ballOn;
-        let playerTgt = selectedPlayer || (activeCall.type === 'Boeing' ? "#25 Butler to Pass" : "Ball Carrier");
+        let playerTgt = selectedPlayer || (activeCall ? (activeCall.type === 'Boeing' ? "#25 Butler to Pass" : "Ball Carrier") : "Penalty");
 
         saveHistory();
 
@@ -1531,12 +1648,30 @@
             gameState.ballOn = 100;
         } else if (activeSpecial === "Turnover") {
             nextSit = "Turnover";
-        } else if (activeSpecial.startsWith("Penalty")) {
+        } else if (isPenalty) {
+            // Replay the down, adjust yardline and distance intuitively
             gameState.ballOn = Math.max(1, Math.min(99, gameState.ballOn + gain));
-            gameState.distance = Math.max(1, gameState.distance - gain);
             let toGoalNow = 100 - gameState.ballOn;
             let curDn = ["1st", "2nd", "3rd", "4th"][gameState.down - 1];
-            nextSit = gameState.distance >= toGoalNow ? `${curDn} & Goal` : `${curDn} & ${gameState.distance}`;
+            
+            if (activeSpecial === "Penalty Offense") {
+                // e.g., 2nd & 7 with -10yd pen -> 2nd & 17
+                let penaltyMagnitude = Math.abs(gain) || 5;
+                gameState.distance = Math.min(toGoalNow, gameState.distance + penaltyMagnitude);
+                nextSit = gameState.distance >= toGoalNow ? `${curDn} & Goal` : `${curDn} & ${gameState.distance}`;
+            } else {
+                // Penalty Defense (+5, +10)
+                let penYards = Math.abs(gain) || 5;
+                if (penYards >= gameState.distance) {
+                    // Automatic or yardage First Down
+                    gameState.down = 1;
+                    gameState.distance = Math.min(10, toGoalNow);
+                    nextSit = "1st & " + (gameState.distance >= toGoalNow ? "Goal" : gameState.distance);
+                } else {
+                    gameState.distance -= penYards;
+                    nextSit = gameState.distance >= toGoalNow ? `${curDn} & Goal` : `${curDn} & ${gameState.distance}`;
+                }
+            }
         } else {
             gameState.ballOn = Math.min(99, gameState.ballOn + gain);
             let toGoal = 100 - gameState.ballOn;
@@ -1565,10 +1700,10 @@
             driveEnd: gameState.endTime,
             situation: initialSit,
             ballOn: initialBallOn,
-            callNum: activeCall.num,
-            play: activeCall.name,
-            type: activeCall.type === "Cadillac" ? "Run" : "Pass",
-            formation: activeCall.form,
+            callNum: activeCall ? activeCall.num : (isPenalty ? "PEN" : "--"),
+            play: activeCall ? activeCall.name : activeSpecial,
+            type: activeCall ? (activeCall.type === "Cadillac" ? "Run" : "Pass") : "Penalty",
+            formation: activeCall ? activeCall.form : "--",
             carrier: playerTgt,
             yards: gain,
             nextSituation: nextSit
@@ -1586,14 +1721,7 @@
     function renderMirrorTable() {
         const tbody = document.getElementById('mirrorTableBody');
         tbody.innerHTML = "";
-        document.getElementById('playCountBadge').innerText = loggedPlays.length;
-
-        if (loggedPlays.length > 0) {
-            let last = loggedPlays[0];
-            document.getElementById('recentPlayPreview').innerText = `#${last.callNum} ${last.play} (${last.yards >= 0 ? '+' : ''}${last.yards}y)`;
-        } else {
-            document.getElementById('recentPlayPreview').innerText = "Tap to view stats";
-        }
+        document.getElementById('playCountBadge').innerText = `${loggedPlays.length} Plays`;
 
         let displayed = logViewFilterMode === 'drive' 
             ? loggedPlays.filter(p => p.drive === gameState.driveNum)
@@ -1669,7 +1797,8 @@
             startTime: "10:00",
             endTime: "--:--",
             driveHistory: { 1: { start: "Q1 10:00", end: "--:--" } },
-            history: []
+            history: [],
+            futureHistory: []
         };
         currentQuarterIdx = 0;
         updateHUD();
