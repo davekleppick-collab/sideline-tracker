@@ -8,7 +8,6 @@
     <title>10U Gold Sideline Tracker</title>
     <style>
         :root {
-            /* North Allegheny Black, Gold & White */
             --bg-main: #050505;
             --hud-surface: #101010;
             --hud-border: #222222;
@@ -24,7 +23,7 @@
             --cadillac: #22c55e;
             --boeing: #38bdf8;
             --text-main: #ffffff;
-            --text-muted: #a3a3a3;
+            --text-muted: #b8b8b8; /* Enhanced small font contrast */
             --danger: #ef4444;
         }
 
@@ -65,14 +64,14 @@
             background: #111111;
             border: 1px solid #222222;
             border-radius: 8px;
-            padding: 4px 10px;
-            font-size: 11px;
+            padding: 5px 10px;
+            font-size: 12px;
             font-weight: 800;
             flex-shrink: 0;
         }
         .game-bar-title { color: var(--accent-gold); cursor: pointer; }
-        .game-bar-status { color: #ffffff; font-size: 10px; display: flex; align-items: center; gap: 4px; }
-        .game-bar-status::before { content: '●'; font-size: 10px; color: var(--accent-gold); }
+        .game-bar-status { color: #ffffff; font-size: 11px; display: flex; align-items: center; gap: 4px; }
+        .game-bar-status::before { content: '●'; font-size: 11px; color: var(--accent-gold); }
 
         /* 1. HUD */
         .hud-grid {
@@ -81,36 +80,16 @@
             gap: 6px;
             background: var(--hud-surface);
             border: 1px solid var(--hud-border);
-            padding: 5px 8px;
+            padding: 6px 8px;
             border-radius: 10px;
             text-align: center;
             flex-shrink: 0;
         }
-        .hud-cell div { font-size: 9px; color: var(--text-muted); font-weight: 800; letter-spacing: 0.5px; }
+        .hud-cell div { font-size: 11px; color: var(--text-muted); font-weight: 800; letter-spacing: 0.5px; }
         .hud-cell span { display: block; font-size: 16px; font-weight: 900; color: #fff; margin-top: 1px; }
         .hud-cell span.highlight { color: var(--accent-gold); }
 
-        /* 2. LIVE TEAM TOTALS & CURRENT DRIVE STATS */
-        .live-stats-box {
-            background: #0d0d0d;
-            border: 1.5px solid #222222;
-            border-radius: 10px;
-            padding: 4px 6px;
-            display: grid;
-            grid-template-columns: 1.2fr 1.1fr 1.1fr 1.1fr 0.9fr;
-            gap: 4px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-        .stat-item { display: flex; flex-direction: column; justify-content: center; }
-        .stat-label { font-size: 8px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
-        .stat-val { font-size: 11px; font-weight: 900; color: #fff; }
-        .stat-val.gold { color: var(--accent-gold); }
-        .stat-val.run { color: var(--cadillac); }
-        .stat-val.pass { color: var(--boeing); }
-        .stat-val.succ { color: #ffffff; }
-
-        /* 3. SCOREBOARD COUNTDOWN DRIVE STRIP */
+        /* 2. SCOREBOARD COUNTDOWN DRIVE STRIP */
         .drive-strip {
             display: flex;
             align-items: center;
@@ -118,8 +97,8 @@
             background: var(--hud-surface);
             border: 1px solid var(--hud-border);
             border-radius: 10px;
-            padding: 4px 8px;
-            font-size: 11px;
+            padding: 5px 8px;
+            font-size: 12px;
             flex-shrink: 0;
             gap: 6px;
         }
@@ -128,9 +107,9 @@
             border: 1.5px solid var(--accent-gold);
             color: var(--accent-gold);
             font-weight: 900;
-            font-size: 12px;
+            font-size: 13px;
             border-radius: 6px;
-            padding: 4px 8px;
+            padding: 4px 9px;
         }
         .drive-time-txt {
             flex: 1;
@@ -139,6 +118,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            font-size: 12px;
         }
         .drive-time-txt b { color: #fff; cursor: pointer; text-decoration: underline dotted var(--accent-gold); }
         .drive-btn-group { display: flex; gap: 4px; }
@@ -147,18 +127,18 @@
             color: var(--text-main);
             border: 1px solid #333333;
             border-radius: 6px;
-            padding: 5px 8px;
-            font-size: 11px;
+            padding: 5px 9px;
+            font-size: 12px;
             font-weight: 800;
         }
         .drive-action-btn:active { background: var(--accent-gold); color: #000; }
 
-        /* 4. HERO CALL BANNER */
+        /* 3. HERO CALL BANNER */
         .call-banner {
             background: #111111;
             border: 2px solid #2a2a2a;
             border-radius: 10px;
-            padding: 5px 8px;
+            padding: 6px 9px;
             display: flex;
             align-items: center;
             min-height: 52px;
@@ -181,8 +161,8 @@
             color: var(--accent-gold);
         }
         .call-meta { flex: 1; min-width: 0; }
-        .call-meta .play-title { font-size: 14px; font-weight: 900; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .call-meta .play-sub { font-size: 10px; color: var(--text-muted); margin-top: 2px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .call-meta .play-title { font-size: 15px; font-weight: 900; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .call-meta .play-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
         .call-yards-badge {
             min-width: 82px;
@@ -197,10 +177,10 @@
             padding: 2px 6px;
             flex-shrink: 0;
         }
-        .call-yards-badge .badge-label { font-size: 8px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; line-height: 1; }
+        .call-yards-badge .badge-label { font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; line-height: 1; }
         .call-yards-badge .badge-val { font-size: 18px; font-weight: 900; color: var(--accent-gold); line-height: 1.1; margin-top: 1px; }
 
-        /* 5. CURRENT DRIVE FLOW RIBBON */
+        /* 4. CURRENT DRIVE FLOW RIBBON */
         .flow-ribbon-container {
             display: flex;
             gap: 5px;
@@ -214,19 +194,19 @@
             background: #121212;
             border: 1px solid #2a2a2a;
             border-radius: 6px;
-            padding: 3px 8px;
+            padding: 4px 9px;
             display: flex;
             align-items: center;
             gap: 6px;
             white-space: nowrap;
-            font-size: 11px;
+            font-size: 12px;
             flex-shrink: 0;
         }
-        .flow-card .sit { color: var(--text-muted); font-weight: 800; font-size: 10px; }
+        .flow-card .sit { color: var(--text-muted); font-weight: 800; font-size: 11px; }
         .flow-card .call { color: var(--accent-gold); font-weight: 900; }
         .flow-card .res { font-weight: 900; color: #fff; }
 
-        /* 6. KEYPAD SECTION (JUMBO KEYS) */
+        /* 5. KEYPAD SECTION */
         .keypad-section {
             flex: 1;
             display: flex;
@@ -234,8 +214,8 @@
             background: var(--keypad-surface);
             border: 1px solid var(--keypad-border);
             border-radius: 12px;
-            padding: 5px;
-            gap: 4px;
+            padding: 6px;
+            gap: 5px;
             min-height: 0;
         }
         .mode-toggle-row {
@@ -245,8 +225,8 @@
             flex-shrink: 0;
         }
         .mode-btn {
-            height: 34px;
-            font-size: 11px;
+            height: 36px;
+            font-size: 12px;
             font-weight: 800;
             background: #1c1c1c;
             color: #d4d4d4;
@@ -265,9 +245,9 @@
             color: #f87171;
             border: 1px solid #451a1a;
             border-radius: 6px;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 900;
-            height: 34px;
+            height: 36px;
             cursor: pointer;
         }
         .clear-play-btn:active { background: #331111; }
@@ -296,7 +276,7 @@
             transform: scale(0.96);
         }
         .num-key.action-key {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 800;
             background: #242424;
             color: #ffffff;
@@ -313,7 +293,7 @@
             background: #181818;
             border: 1.5px solid #2e2e2e;
             color: #ffffff;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 800;
             border-radius: 8px;
             text-align: center;
@@ -344,7 +324,7 @@
             background: #171408;
             border: 1.5px solid var(--gold-border);
             color: var(--accent-gold);
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 900;
             border-radius: 6px;
             height: 36px;
@@ -355,12 +335,12 @@
         }
         .pen-preset-btn:active { background: var(--accent-gold); color: #000; }
 
-        /* 7. MINIMAL CARRIER STATUS BAR */
+        /* 6. MINIMAL CARRIER STATUS STRIP */
         .carrier-status-strip {
             background: #121212;
             border: 1.5px solid #2b2b2b;
             border-radius: 8px;
-            padding: 8px 12px;
+            padding: 9px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -368,21 +348,21 @@
             flex-shrink: 0;
         }
         .carrier-status-strip:active { border-color: var(--accent-gold); }
-        .carrier-strip-label { font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
-        .carrier-strip-val { font-size: 13px; font-weight: 900; color: #fff; display: flex; align-items: center; gap: 6px; }
+        .carrier-strip-label { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+        .carrier-strip-val { font-size: 14px; font-weight: 900; color: #fff; display: flex; align-items: center; gap: 6px; }
         .carrier-strip-val b { color: var(--accent-gold); }
 
-        /* 8. STATS & LOGS PROMINENT BAR */
+        /* 7. PROMINENT STATS & LOGS BUTTON */
         .prominent-logs-btn {
             background: #171717;
             border: 1.5px solid var(--accent-gold);
             border-radius: 10px;
-            height: 40px;
+            height: 42px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 14px;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 900;
             color: var(--accent-gold);
             cursor: pointer;
@@ -395,10 +375,10 @@
             border: 1px solid #333333;
             padding: 2px 8px;
             border-radius: 6px;
-            font-size: 11px;
+            font-size: 12px;
         }
 
-        /* 9. BOTTOM COMMAND BUTTONS */
+        /* 8. BOTTOM COMMAND BUTTONS */
         .bottom-actions {
             display: grid;
             grid-template-columns: 2.5fr 0.75fr 0.75fr;
@@ -410,8 +390,8 @@
             color: #000000;
             border: none;
             border-radius: 10px;
-            height: 48px;
-            font-size: 18px;
+            height: 50px;
+            font-size: 19px;
             font-weight: 900;
             display: flex;
             align-items: center;
@@ -427,7 +407,7 @@
             border-radius: 10px;
             font-size: 13px;
             font-weight: 900;
-            height: 48px;
+            height: 50px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -438,71 +418,74 @@
         .history-btn:active { background: #262626; transform: scale(0.96); }
         .history-btn.disabled { opacity: 0.3; pointer-events: none; }
 
-        /* 10. FLOATING RADIAL JERSEY WHEEL OVERLAY */
-        .radial-overlay {
+        /* 9. BOTTOM RUNNING STATS BAR (MOVED TO ABSOLUTE BOTTOM) */
+        .live-stats-box {
+            background: #0d0d0d;
+            border: 1.5px solid #222222;
+            border-radius: 10px;
+            padding: 5px 6px;
+            display: grid;
+            grid-template-columns: 1.2fr 1.1fr 1.1fr 1.1fr 0.9fr;
+            gap: 4px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .stat-item { display: flex; flex-direction: column; justify-content: center; }
+        .stat-label { font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+        .stat-val { font-size: 12px; font-weight: 900; color: #fff; }
+        .stat-val.gold { color: var(--accent-gold); }
+        .stat-val.run { color: var(--cadillac); }
+        .stat-val.pass { color: var(--boeing); }
+        .stat-val.succ { color: #ffffff; }
+
+        /* 10. BIG CIRCULAR PLAYER PICKER MODAL WITH STATS */
+        .player-modal-overlay {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(4px);
-            z-index: 150;
+            background: rgba(5, 5, 5, 0.94);
+            backdrop-filter: blur(6px);
+            z-index: 250;
             display: none;
+            flex-direction: column;
+            padding: calc(env(safe-area-inset-top) + 12px) 14px calc(env(safe-area-inset-bottom) + 14px) 14px;
+            gap: 10px;
         }
-        .radial-wheel-box {
-            position: absolute;
-            bottom: 60px;
-            right: 20px;
-            width: 280px;
-            height: 280px;
-            pointer-events: none;
+        .player-circles-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            overflow-y: auto;
+            padding: 4px;
         }
-        .jersey-disc {
-            position: absolute;
-            width: 54px;
-            height: 54px;
-            border-radius: 50%;
-            background: #161616;
-            border: 2px solid var(--accent-gold);
-            color: #ffffff;
+        .player-stat-circle {
+            background: #141414;
+            border: 2px solid #333333;
+            border-radius: 20px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-weight: 900;
-            font-size: 14px;
-            pointer-events: auto;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.8);
-            transform: translate(-50%, -50%);
-            transition: transform 0.15s ease, background 0.15s ease;
+            text-align: center;
             cursor: pointer;
+            transition: transform 0.08s ease, background 0.08s ease;
         }
-        .jersey-disc span { font-size: 9px; font-weight: 700; color: var(--accent-gold); margin-top: -1px; }
-        .jersey-disc:active {
-            background: var(--accent-gold);
-            color: #000;
-            transform: translate(-50%, -50%) scale(1.1);
+        .player-stat-circle:active {
+            background: #242424;
+            border-color: var(--accent-gold);
+            transform: scale(0.97);
         }
-        .jersey-disc:active span { color: #000; }
-        .jersey-center-hub {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: #262626;
-            border: 2px solid #555;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 16px;
-            pointer-events: auto;
-            cursor: pointer;
+        .player-stat-circle.selected {
+            background: var(--gold-subtle);
+            border-color: var(--accent-gold);
         }
+        .p-jersey { font-size: 22px; font-weight: 900; color: var(--accent-gold); }
+        .p-name { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+        .p-substats { font-size: 12px; font-weight: 700; color: var(--text-muted); line-height: 1.3; }
 
         /* 11. YARDLINE KEYPAD MODAL */
         .yard-keypad-modal {
@@ -526,9 +509,9 @@
             padding: 12px;
             text-align: center;
         }
-        .yard-prompt-title { font-size: 12px; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-bottom: 4px; }
+        .yard-prompt-title { font-size: 13px; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-bottom: 4px; }
         .yard-big-value { font-size: 34px; font-weight: 900; color: #fff; }
-        .yard-side-badge { font-size: 13px; font-weight: 800; color: var(--accent-gold); margin-top: 2px; }
+        .yard-side-badge { font-size: 14px; font-weight: 800; color: var(--accent-gold); margin-top: 2px; }
 
         /* 12. SLIDE-UP ANALYTICS & LOG MODAL */
         .log-modal {
@@ -551,7 +534,7 @@
             border-bottom: 1px solid #262626;
             padding-bottom: 6px;
         }
-        .modal-header h3 { margin: 0; font-size: 15px; color: var(--accent-gold); }
+        .modal-header h3 { margin: 0; font-size: 16px; color: var(--accent-gold); }
         .close-modal-btn {
             background: #171717;
             border: 1px solid #333333;
@@ -566,7 +549,7 @@
         .hub-tabs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; }
         .hub-tab-btn {
             padding: 6px 2px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 800;
             background: #171717;
             color: var(--text-muted);
@@ -594,7 +577,7 @@
             background: #171717;
             border: 1px solid #333333;
             color: var(--text-muted);
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 800;
             text-align: center;
             cursor: pointer;
@@ -610,24 +593,26 @@
             background: #171717;
             border: 1px solid #2b2b2b;
             border-radius: 8px;
-            padding: 7px;
+            padding: 8px;
             display: flex;
             flex-direction: column;
             gap: 2px;
         }
-        .card-stat-title { font-size: 9px; color: var(--text-muted); font-weight: 800; text-transform: uppercase; }
-        .card-stat-number { font-size: 16px; font-weight: 900; color: #fff; }
+        .card-stat-title { font-size: 11px; color: var(--text-muted); font-weight: 800; text-transform: uppercase; }
+        .card-stat-number { font-size: 17px; font-weight: 900; color: #fff; }
 
-        .mirror-table { width: 100%; border-collapse: collapse; font-size: 11px; text-align: left; }
-        .mirror-table th, .mirror-table td { padding: 6px 4px; border-bottom: 1px solid #262626; }
+        .mirror-table { width: 100%; border-collapse: collapse; font-size: 12px; text-align: left; }
+        .mirror-table th, .mirror-table td { padding: 8px 5px; border-bottom: 1px solid #262626; cursor: pointer; }
         .mirror-table th {
             background: #1a1a1a;
             color: var(--text-muted);
-            font-size: 10px;
+            font-size: 11px;
             text-transform: uppercase;
             position: sticky;
             top: 0;
+            cursor: default;
         }
+        .mirror-table tr:active td { background: #242424; }
         .modal-footer {
             display: grid;
             grid-template-columns: 1.2fr 1fr 1fr;
@@ -640,7 +625,7 @@
             border: none;
             border-radius: 8px;
             height: 42px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 900;
             cursor: pointer;
         }
@@ -649,7 +634,7 @@
             color: #f87171;
             border: 1px solid #451a1a;
             border-radius: 8px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 900;
             height: 42px;
             cursor: pointer;
@@ -686,31 +671,7 @@
         </div>
     </div>
 
-    <!-- 2. LIVE TEAM TOTALS & CURRENT DRIVE STATS -->
-    <div class="live-stats-box">
-        <div class="stat-item">
-            <span class="stat-label">Curr Drive</span>
-            <span class="stat-val gold"><span id="statCurrDrivePlays">0</span>p / <span id="statCurrDriveYards">0</span>y</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-label">Total Off</span>
-            <span class="stat-val"><span id="statPlays">0</span>p / <span id="statTotYds">0</span>y</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-label">Run / Pass</span>
-            <span class="stat-val"><span class="run" id="statRushYds">0</span>y / <span class="pass" id="statPassYds">0</span>y</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-label">Succ. (4+y)</span>
-            <span class="stat-val succ"><span id="statSuccRate">0%</span> (<span id="statSuccCount">0</span>)</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-label">TOP</span>
-            <span class="stat-val" id="statTOP">0:00</span>
-        </div>
-    </div>
-
-    <!-- 3. SCOREBOARD COUNTDOWN DRIVE STRIP -->
+    <!-- 2. SCOREBOARD COUNTDOWN DRIVE STRIP -->
     <div class="drive-strip">
         <button type="button" class="qtr-btn fast-btn" id="qtrSelectorBtn" onclick="toggleQuarter()">Q1</button>
         <span class="drive-time-txt">
@@ -724,7 +685,7 @@
         </div>
     </div>
 
-    <!-- 4. HERO CALL BANNER -->
+    <!-- 3. HERO CALL BANNER -->
     <div class="call-banner" id="callBannerDisplay">
         <div class="call-num-badge" id="bannerCallNum">--</div>
         <div class="call-meta">
@@ -737,7 +698,7 @@
         </div>
     </div>
 
-    <!-- 5. CURRENT DRIVE FLOW RIBBON -->
+    <!-- 4. CURRENT DRIVE FLOW RIBBON -->
     <div class="flow-ribbon-container" id="flowRibbonStrip">
         <div class="flow-card">
             <span class="sit">Drive 1</span>
@@ -746,7 +707,7 @@
         </div>
     </div>
 
-    <!-- 6. KEYPAD SECTION -->
+    <!-- 5. KEYPAD SECTION -->
     <div class="keypad-section">
         <div class="mode-toggle-row">
             <button type="button" class="mode-btn fast-btn active" id="tabModeCall" onclick="setNumpadMode('call')">Call #</button>
@@ -790,21 +751,21 @@
         </div>
     </div>
 
-    <!-- 7. MINIMAL CARRIER STATUS STRIP -->
-    <div class="carrier-status-strip fast-btn" onclick="openRadialWheel()">
+    <!-- 6. MINIMAL CARRIER STATUS STRIP -->
+    <div class="carrier-status-strip fast-btn" onclick="openPlayerStatsModal()">
         <span class="carrier-strip-label">TOUCH ASSIGNMENT</span>
         <span class="carrier-strip-val" id="carrierDisplayVal">🏈 <b>Unassigned</b> ➔ Tap to Pick</span>
     </div>
 
-    <!-- 8. PROMINENT STATS & LOGS BUTTON -->
+    <!-- 7. PROMINENT STATS & LOGS BUTTON -->
     <div class="prominent-logs-btn fast-btn" onclick="openLogModal()">
         <span>📊 STATS & GAME LOG</span>
         <span class="badge" id="playCountBadge">0 Plays</span>
     </div>
 
-    <!-- 9. BOTTOM COMMAND BUTTONS -->
+    <!-- 8. BOTTOM COMMAND BUTTONS -->
     <div class="bottom-actions">
-        <button type="button" class="big-log-btn fast-btn" onclick="logPlay()">LOG PLAY</button>
+        <button type="button" class="big-log-btn fast-btn" onclick="logPlay()" id="logButtonMain">LOG PLAY</button>
         <button type="button" class="history-btn fast-btn" id="btnUndoHistory" onclick="undoLastPlay()">
             <span>↩ Undo</span>
         </button>
@@ -813,11 +774,37 @@
         </button>
     </div>
 
-    <!-- 10. FLOATING RADIAL JERSEY WHEEL OVERLAY -->
-    <div class="radial-overlay" id="radialOverlay" onclick="closeRadialWheel()">
-        <div class="radial-wheel-box" id="radialWheelBox" onclick="event.stopPropagation()">
-            <!-- Jersey Discs populated dynamically based on Run vs Pass -->
+    <!-- 9. RUNNING STATS BAR (MOVED TO ABSOLUTE BOTTOM) -->
+    <div class="live-stats-box">
+        <div class="stat-item">
+            <span class="stat-label">Curr Drive</span>
+            <span class="stat-val gold"><span id="statCurrDrivePlays">0</span>p / <span id="statCurrDriveYards">0</span>y</span>
         </div>
+        <div class="stat-item">
+            <span class="stat-label">Total Off</span>
+            <span class="stat-val"><span id="statPlays">0</span>p / <span id="statTotYds">0</span>y</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">Run / Pass</span>
+            <span class="stat-val"><span class="run" id="statRushYds">0</span>y / <span class="pass" id="statPassYds">0</span>y</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">Succ. (4+y)</span>
+            <span class="stat-val succ"><span id="statSuccRate">0%</span> (<span id="statSuccCount">0</span>)</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">TOP</span>
+            <span class="stat-val" id="statTOP">0:00</span>
+        </div>
+    </div>
+
+    <!-- 10. BIG CIRCULAR PLAYER PICKER MODAL WITH STATS -->
+    <div class="player-modal-overlay" id="playerModalOverlay" onclick="closePlayerStatsModal()">
+        <div class="modal-header" onclick="event.stopPropagation()">
+            <h3>🏈 Select Ball Carrier / Target</h3>
+            <button type="button" class="close-modal-btn fast-btn" onclick="closePlayerStatsModal()">✖ Close</button>
+        </div>
+        <div class="player-circles-grid" id="playerCirclesGrid" onclick="event.stopPropagation()"></div>
     </div>
 
     <!-- 11. ON-SCREEN YARDLINE KEYPAD MODAL -->
@@ -861,7 +848,7 @@
         <div class="hub-tabs">
             <button type="button" class="hub-tab-btn fast-btn active" id="tabBtnTeam" onclick="switchHubTab('team')">Team Totals</button>
             <button type="button" class="hub-tab-btn fast-btn" id="tabBtnPlayers" onclick="switchHubTab('players')">Player Stats</button>
-            <button type="button" class="hub-tab-btn fast-btn" id="tabBtnLog" onclick="switchHubTab('log')">Play Log</button>
+            <button type="button" class="hub-tab-btn fast-btn" id="tabBtnLog" onclick="switchHubTab('log')">Play Log (Tap to Edit)</button>
         </div>
 
         <!-- VIEW 1: Team Overview -->
@@ -882,12 +869,12 @@
                 <div class="card-stat">
                     <span class="card-stat-title">Cadillac (Run)</span>
                     <span class="card-stat-number" style="color:var(--cadillac);"><span id="overviewRushPlays">0</span>p / <span id="overviewRushYards">0</span>y</span>
-                    <span style="font-size:10px; color:var(--text-muted);"><span id="overviewRushAvg">0.0</span> yds/carry</span>
+                    <span style="font-size:11px; color:var(--text-muted);"><span id="overviewRushAvg">0.0</span> yds/carry</span>
                 </div>
                 <div class="card-stat">
                     <span class="card-stat-title">Boeing (Pass)</span>
                     <span class="card-stat-number" style="color:var(--boeing);"><span id="overviewPassPlays">0</span>p / <span id="overviewPassYards">0</span>y</span>
-                    <span style="font-size:10px; color:var(--text-muted);"><span id="overviewPassAvg">0.0</span> yds/att</span>
+                    <span style="font-size:11px; color:var(--text-muted);"><span id="overviewPassAvg">0.0</span> yds/att</span>
                 </div>
                 <div class="card-stat">
                     <span class="card-stat-title">Successful (4+ Yds)</span>
@@ -921,7 +908,7 @@
             </table>
         </div>
 
-        <!-- VIEW 3: Play-by-Play Mirror Table -->
+        <!-- VIEW 3: Play-by-Play Mirror Table (Interactive Editing) -->
         <div class="hub-content-view" id="viewLogMirror" style="display:none; padding:6px 0 0 0;">
             <div style="padding:0 8px 6px 8px;">
                 <div class="filter-toggle-row">
@@ -1060,16 +1047,27 @@
         86: { name: "SPREAD - Z motion over Flood Left", type: "Boeing", form: "Wing Right" }
     };
 
-    // Athletic Roster Discs Configuration
-    const rosterPlayers = [
-        { num: "#20", name: "Truesdell", short: "True" },
-        { num: "#3",  name: "Kleppick",  short: "Klep" },
-        { num: "#25", name: "Butler",     short: "Butl" },
-        { num: "#2",  name: "Martinkovich", short: "Mart" },
-        { num: "#6",  name: "Moose",      short: "Moos" },
-        { num: "#9",  name: "Dickson",    short: "Dick" },
-        { num: "#8",  name: "Wingertsahn", short: "Wing" },
-        { num: "??",  name: "Other",      short: "Othr" }
+    const runPlayersList = [
+        { num: "#20", name: "Truesdell" },
+        { num: "#3",  name: "Kleppick" },
+        { num: "#25", name: "Butler" },
+        { num: "#2",  name: "Martinkovich" },
+        { num: "#6",  name: "Moose" },
+        { num: "#9",  name: "Dickson" },
+        { num: "#8",  name: "Wingertsahn" },
+        { num: "??",  name: "Other" }
+    ];
+
+    const passTargetsList = [
+        { num: "#20", name: "Butler to Truesdell" },
+        { num: "#3",  name: "Butler to Kleppick" },
+        { num: "#2",  name: "Butler to Martinkovich" },
+        { num: "#6",  name: "Butler to Moose" },
+        { num: "#9",  name: "Butler to Dickson" },
+        { num: "#8",  name: "Butler to Wingertsahn" },
+        { num: "INC", name: "Incomplete Pass" },
+        { num: "QB",  name: "Butler Scramble" },
+        { num: "??",  name: "Other" }
     ];
 
     let currentGameOpponent = "PR White";
@@ -1080,6 +1078,7 @@
     let selectedPlayer = "";
     let activeCall = null;
     let loggedPlays = [];
+    let editingPlayIndex = null; // Track if we are editing an existing play
 
     const quarters = ["Q1", "Q2", "Q3", "Q4"];
     let currentQuarterIdx = 0;
@@ -1097,69 +1096,56 @@
         futureHistory: []
     };
 
-    // --- RADIAL THUMB WHEEL ENGINE ---
-    function openRadialWheel() {
-        const wheelBox = document.getElementById('radialWheelBox');
-        wheelBox.innerHTML = "";
+    // --- BIG CIRCULAR PLAYER PICKER MODAL ENGINE ---
+    function openPlayerStatsModal() {
+        const grid = document.getElementById('playerCirclesGrid');
+        grid.innerHTML = "";
 
-        // Arc Geometry: radius from bottom-right pivot
-        const radius = 190;
-        const totalItems = rosterPlayers.length;
-        // Angles spanning from 100° to 175° (Upper-left quadrant from bottom right)
-        const startAngle = 98 * (Math.PI / 180);
-        const endAngle = 178 * (Math.PI / 180);
-        const step = (endAngle - startAngle) / (totalItems - 1);
+        let isPass = activeCall && activeCall.type === 'Boeing';
+        let list = isPass ? passTargetsList : runPlayersList;
 
-        rosterPlayers.forEach((p, i) => {
-            const angle = startAngle + (i * step);
-            // X and Y relative to bottom-right corner (280, 280)
-            const x = 280 - (radius * Math.cos(angle - (Math.PI / 2)));
-            const y = 280 - (radius * Math.sin(angle - (Math.PI / 2)));
-
-            const disc = document.createElement('div');
-            disc.className = "jersey-disc";
-            disc.style.left = `${x}px`;
-            disc.style.top = `${y}px`;
-
-            let displayLabel = activeCall && activeCall.type === 'Boeing' && p.num === '#25' ? "PASS" : p.short;
-            disc.innerHTML = `${p.num}<span>${displayLabel}</span>`;
-
-            bindInstantTouch(disc, () => {
-                selectCarrierFromWheel(p);
-            });
-            wheelBox.appendChild(disc);
+        let statsMap = {};
+        loggedPlays.forEach(p => {
+            let carrierName = p.carrier;
+            if (!statsMap[carrierName]) {
+                statsMap[carrierName] = { touches: 0, yards: 0, tds: 0 };
+            }
+            statsMap[carrierName].touches++;
+            statsMap[carrierName].yards += p.yards;
+            if (p.nextSituation === "TD!") statsMap[carrierName].tds++;
         });
 
-        // Add Center Cancel Hub
-        const hub = document.createElement('div');
-        hub.className = "jersey-center-hub";
-        hub.innerText = "✖";
-        bindInstantTouch(hub, closeRadialWheel);
-        wheelBox.appendChild(hub);
+        list.forEach(item => {
+            let identifier = isPass ? item.name : `${item.num} ${item.name}`;
+            let pData = statsMap[identifier] || { touches: 0, yards: 0, tds: 0 };
+            let ypc = pData.touches > 0 ? (pData.yards / pData.touches).toFixed(1) : "0.0";
 
-        document.getElementById('radialOverlay').style.display = 'block';
+            const circle = document.createElement('div');
+            circle.className = `player-stat-circle ${selectedPlayer === identifier ? 'selected' : ''}`;
+            circle.innerHTML = `
+                <div class="p-jersey">${item.num}</div>
+                <div class="p-name">${item.name}</div>
+                <div class="p-substats">
+                    <b>${pData.touches}</b> T | <b>${pData.yards}</b> Yd<br>
+                    <b>${ypc}</b> YPC | <b>${pData.tds}</b> TD
+                </div>
+            `;
+
+            bindInstantTouch(circle, () => {
+                selectedPlayer = identifier;
+                document.getElementById('carrierDisplayVal').innerHTML = `🏈 <b>${identifier}</b>`;
+                closePlayerStatsModal();
+                setNumpadMode('yards');
+            });
+
+            grid.appendChild(circle);
+        });
+
+        document.getElementById('playerModalOverlay').style.display = 'flex';
     }
 
-    function closeRadialWheel() {
-        document.getElementById('radialOverlay').style.display = 'none';
-    }
-
-    function selectCarrierFromWheel(playerObj) {
-        if (activeCall && activeCall.type === 'Boeing') {
-            if (playerObj.num === "#25") {
-                selectedPlayer = "#25 Butler Scramble";
-            } else if (playerObj.num === "??") {
-                selectedPlayer = "Other";
-            } else {
-                selectedPlayer = `#25 Butler to ${playerObj.num} ${playerObj.name}`;
-            }
-        } else {
-            selectedPlayer = `${playerObj.num} ${playerObj.name}`;
-        }
-
-        document.getElementById('carrierDisplayVal').innerHTML = `🏈 <b>${playerObj.num} ${playerObj.name}</b>`;
-        closeRadialWheel();
-        setNumpadMode('yards');
+    function closePlayerStatsModal() {
+        document.getElementById('playerModalOverlay').style.display = 'none';
     }
 
     function resetCurrentPlay() {
@@ -1168,9 +1154,11 @@
         activeSpecial = "Normal";
         selectedPlayer = "";
         activeCall = null;
+        editingPlayIndex = null;
         resolveCallNumber(null);
         updateYardsDisplay();
         document.getElementById('carrierDisplayVal').innerHTML = `🏈 <b>Unassigned</b> ➔ Tap to Pick`;
+        document.getElementById('logButtonMain').innerText = "LOG PLAY";
         selectSpecial('Normal', document.querySelector('#specialGrid .pill-btn'));
         setNumpadMode('call');
     }
@@ -1184,6 +1172,25 @@
             inputYardsBuffer = yds.toString();
         }
         updateYardsDisplay();
+    }
+
+    // --- EDIT EXISTING PLAY IN LOG ---
+    function editLoggedPlay(index) {
+        let p = loggedPlays[index];
+        if (!p) return;
+
+        // Load into active screen for editing
+        editingPlayIndex = index;
+        inputCallBuffer = p.callNum.toString();
+        resolveCallNumber(parseInt(inputCallBuffer, 10));
+        inputYardsBuffer = p.yards.toString();
+        updateYardsDisplay();
+        selectedPlayer = p.carrier;
+        document.getElementById('carrierDisplayVal').innerHTML = `🏈 <b>${selectedPlayer}</b>`;
+        document.getElementById('logButtonMain').innerText = "UPDATE PLAY";
+
+        closeLogModal();
+        setNumpadMode('yards');
     }
 
     // --- YARDLINE MODAL ENGINE ---
@@ -1292,7 +1299,7 @@
     }
 
     // --- LOCALSTORAGE PERSISTENCE ENGINE ---
-    const STORAGE_KEY = "10U_GOLD_SIDELINE_STATE_V8";
+    const STORAGE_KEY = "10U_GOLD_SIDELINE_STATE_V10";
 
     function saveStateToLocalStorage() {
         const fullBundle = {
@@ -1448,7 +1455,7 @@
         const currentDrivePlays = loggedPlays.filter(p => p.drive === gameState.driveNum).reverse();
 
         if (currentDrivePlays.length === 0) {
-            strip.innerHTML = `<div class="flow-card"><span class="sit">Drive ${gameState.driveNum}</span><span class="call">Kickoff</span><span class="res">1st & 10</span></div>`;
+            strip.innerHTML = `<div class="flow-card"><span class="sit">Drive ${gameState.driveNum}</span><span class="call">Ready</span><span class="res">1st & 10</span></div>`;
             return;
         }
 
@@ -1460,7 +1467,6 @@
             strip.appendChild(card);
         });
 
-        // Scroll automatically to latest play
         strip.scrollLeft = strip.scrollWidth;
     }
 
@@ -1576,9 +1582,8 @@
             if (inputCallBuffer.length >= 2) inputCallBuffer = "";
             inputCallBuffer += char;
             resolveCallNumber(parseInt(inputCallBuffer, 10));
-            // Automatically prompt the Radial Thumb Wheel when a valid call is resolved
             if (inputCallBuffer.length === 2 || (inputCallBuffer.length === 1 && parseInt(inputCallBuffer, 10) > 8)) {
-                setTimeout(openRadialWheel, 120);
+                setTimeout(openPlayerStatsModal, 120);
             }
         } else if (numpadMode === 'yards') {
             let isNeg = inputYardsBuffer.startsWith("-");
@@ -1766,9 +1771,15 @@
         let dnStr = ["1st", "2nd", "3rd", "4th"][gameState.down - 1];
         let initialSit = gameState.distance >= toGoalBefore ? `${dnStr} & Goal` : `${dnStr} & ${gameState.distance}`;
         let initialBallOn = gameState.ballOn;
-        let playerTgt = selectedPlayer || (activeCall ? (activeCall.type === 'Boeing' ? "#25 Butler to Pass" : "Ball Carrier") : "Penalty");
+        let playerTgt = selectedPlayer || (activeCall ? (activeCall.type === 'Boeing' ? "Butler to Pass" : "Ball Carrier") : "Penalty");
 
         saveHistory();
+
+        // If we were editing an existing play, remove the old one first before appending updated
+        if (editingPlayIndex !== null) {
+            loggedPlays.splice(editingPlayIndex, 1);
+            editingPlayIndex = null;
+        }
 
         let nextSit = "";
         if (activeSpecial === "Touchdown") {
@@ -1856,10 +1867,10 @@
             return;
         }
 
-        displayed.forEach(p => {
+        displayed.forEach((p, idx) => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td><b>${p.playNum}</b></td>
+                <td><b>${p.playNum}</b> ✏️</td>
                 <td>D${p.drive}</td>
                 <td>${p.situation}</td>
                 <td style="color:var(--accent-gold); font-weight:900;">#${p.callNum}</td>
@@ -1867,6 +1878,10 @@
                 <td style="font-weight:900; color:${p.yards >= 0 ? '#ffffff' : '#f87171'};">${p.yards >= 0 ? '+' : ''}${p.yards}</td>
                 <td style="color:var(--accent-gold);">${p.nextSituation}</td>
             `;
+            // Clicking any row lets you edit that play
+            bindInstantTouch(tr, () => {
+                editLoggedPlay(idx);
+            });
             tbody.appendChild(tr);
         });
     }
